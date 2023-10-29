@@ -28,8 +28,8 @@ namespace duckHuntROP
         }
 
         private PictureBox PlayPB;
-        public int Width { get; set; }
-        public int Height { get; set; }
+        new public int Width { get; set; }
+        new public int Height { get; set; }
         private void Form1_Load(object sender, EventArgs e)
         {
             this.BackgroundImage = Properties.Resources.bckImageNight;
