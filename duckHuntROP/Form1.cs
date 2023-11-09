@@ -30,10 +30,15 @@ namespace duckHuntROP
             }
         }
         private Panel EndZone;
-        private PictureBox PlayPB;
         private Panel FlyZone;
-        private Timer FlyTimer;
         private Panel BulletZone;
+        private Panel ShopPanel;
+
+        private Timer FlyTimer;
+        
+        private PictureBox ShopPB;
+        private PictureBox PlayPB;
+        //pictureboxes fungujici jako buttony
 
 
         private Gun CurrentGun;
@@ -48,6 +53,8 @@ namespace duckHuntROP
             this.BackgroundImage = Properties.Resources.bckImageNight;
             this.Size = Screen.PrimaryScreen.Bounds.Size;
 
+            this.KeyDown += new KeyEventHandler(Form_KeyDown);
+
             Width = this.Size.Width;
             Height = this.Size.Height;
 
@@ -59,11 +66,29 @@ namespace duckHuntROP
             PlayPB.BackColor = Color.Transparent;
             PlayPB.Click += new EventHandler(Hunt_Click);
 
+            ShopPB = new PictureBox();
+            ShopPB.Size =new Size(Width / 10, Height / 10);
+            ShopPB.Location = new Point(Width / 32, Height / 12 + Height / 8);
+            ShopPB.BackgroundImage = Properties.Resources.huntButton;
+            ShopPB.BackgroundImageLayout = ImageLayout.Stretch;
+            ShopPB.BackColor = Color.Transparent;
+            ShopPB.Click += new EventHandler(Shop_Click);
+
+
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
             FlyZone.Location = new Point(0, Height / 11);
             FlyZone.BackColor = Color.Transparent;
             FlyZone.Hide();
+
+            ShopPanel = new Panel();
+            ShopPanel.Size = new Size(Width-Width/6, Height - Height / 4);
+            ShopPanel.Location = new Point(Width/6, Height / 11);
+            ShopPanel.BackColor = Color.Red;
+            ShopPanel.Hide();
+
+            
+
 
             EndZone = new Panel();
             EndZone.Size = new Size(Width / 32, FlyZone.Height);
@@ -81,15 +106,31 @@ namespace duckHuntROP
             BulletZone.BackColor = Color.Transparent;
             BulletZone.Hide();
 
+
+            Controls.Add(ShopPanel);
             Controls.Add(FlyZone);
             Controls.Add(BulletZone);
             Controls.Add(PlayPB);
+            Controls.Add(ShopPB);
 
 
 
             AllGuns = Gun.CreateGuns();
             UnlockedGuns.Add(AllGuns[0]);
             CurrentGun = AllGuns[0];
+            for (int i = 0; i != AllGuns.Count; i++)
+            {
+                PictureBox gunPB = new PictureBox();
+                gunPB.Size = new Size(Width / 4, Height / 20);
+                gunPB.Location = new Point(Width / 8, Height / 16 * i + Height / 16);
+                gunPB.BackgroundImage = AllGuns[i].Img;
+                gunPB.BackgroundImageLayout = ImageLayout.Stretch;
+                gunPB.BackColor = Color.Transparent;
+                gunPB.Click += new EventHandler(Gun_Buy);
+                gunPB.Tag = i.ToString();
+                ShopPanel.Controls.Add(gunPB);
+                gunPB.Show();
+            }
         }
         private void FlyTimer_Tick(object sender, EventArgs e)
         {
@@ -206,6 +247,40 @@ namespace duckHuntROP
                 Bullet.BackColor = Color.DarkGoldenrod;
                 BulletZone.Controls.Add(Bullet);
             }
+        }
+        private void Form_KeyDown(object sender,KeyEventArgs e)
+        {
+            if(e.KeyData == Keys.R && FlyZone.Visible)
+            {
+                CurrentGun.Reload();
+                ChangeBullets(true);
+            }
+        }
+        private void Shop_Click(object sender, EventArgs e)
+        {
+            if(FlyZone.Visible == false)
+            {
+                ShopPanel.Visible = !ShopPanel.Visible;
+            }
+        }
+        private void Gun_Buy(object sender,EventArgs e)
+        {
+            Gun gun = AllGuns[Convert.ToInt32((sender as PictureBox).Tag)];
+            if (!UnlockedGuns.Contains(gun))
+            {
+                if (Coins >= gun.Cost)
+                {
+                    Coins -= gun.Cost;
+                    UnlockedGuns.Add(gun);
+                    MessageBox.Show("koupil");
+                }
+            } else
+            {
+                CurrentGun = gun;
+                gun.CurrentAmmo = gun.MaxAmmo;
+                MessageBox.Show("Vlastni");
+            }
+            
         }
         private void DiscardBullets()
         {
