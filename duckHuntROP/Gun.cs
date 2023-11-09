@@ -26,25 +26,23 @@ namespace duckHuntROP
             DelayReload = delayReload;
             Img = img;
         }
-        public void Shoot()
+        public async Task Shoot()
         {
+            this.CurrentAmmo--;
             Reloading = true;
-            Task.Factory.StartNew(async () =>
-            {
-                await Task.Delay(this.DelayROF);
-                Reloading = false;
-            });
+            await Task.Delay(this.DelayROF);
+            Reloading = false;
         }
-        public void Reload()
+        public async Task Reload()
         {
-            if(Reloading == false)
+            if (!Reloading)
             {
                 Reloading = true;
-                Task.Factory.StartNew(async () =>
-                {
-                    await Task.Delay(this.DelayReload);
-                    Reloading = false;
-                });
+
+                await Task.Delay(this.DelayReload);
+
+                Reloading = false;
+                CurrentAmmo = MaxAmmo;
             }
         }
         public bool CanShoot()

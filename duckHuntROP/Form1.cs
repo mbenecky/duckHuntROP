@@ -33,6 +33,9 @@ namespace duckHuntROP
         private PictureBox PlayPB;
         private Panel FlyZone;
         private Timer FlyTimer;
+        private Panel BulletZone;
+
+
         private Gun CurrentGun;
         private List<Gun> UnlockedGuns =new List<Gun>();
         private List<Gun> AllGuns;
@@ -70,7 +73,15 @@ namespace duckHuntROP
             FlyTimer = new Timer();
             FlyTimer.Interval = 100;
             FlyTimer.Tick += new EventHandler(FlyTimer_Tick);
+
+            BulletZone = new Panel();
+            BulletZone.Size = new Size(Width / 4, Height / 8);
+            BulletZone.Location = new Point(0, Height - Height /8);
+            BulletZone.BackColor = Color.Transparent;
+            BulletZone.Hide();
+
             Controls.Add(FlyZone);
+            Controls.Add(BulletZone);
             Controls.Add(PlayPB);
 
 
@@ -101,9 +112,11 @@ namespace duckHuntROP
         private void Hunt_Click(object sender, EventArgs e)
         {
             FlyZone.Show();
+            BulletZone.Show();
             PlayPB.Hide();
             this.BackgroundImage = Properties.Resources.bckImage;
             SpawnDucks();
+            CreateBullets();
             FlyTimer.Start();
         }
         public void End(bool win)
@@ -112,6 +125,8 @@ namespace duckHuntROP
             FlyTimer.Stop();
             PlayPB.Show();
             FlyZone.Hide();
+            DiscardBullets();
+            BulletZone.Hide();
 
             if (win)
             {
@@ -135,7 +150,7 @@ namespace duckHuntROP
         public void SpawnDucks()
         {
             Random rnd = new Random();
-            foreach (Duck Dck in CreateDucks())
+            foreach (Duck Dck in Duck.CreateDucks(Level))
             {
                 PictureBox DuckPB = new PictureBox();
                 DuckPB.BackgroundImage = Dck.Img;
@@ -149,43 +164,42 @@ namespace duckHuntROP
                 FlyZone.Controls.Add(DuckPB);
             }
         }
-        private void Duck_Click(object sender, EventArgs e)
+        private async void Duck_Click(object sender, EventArgs e)
         {
-            //ammo check
+            // Ammo check
+            if (CurrentGun != null && CurrentGun.CanShoot())
+            {
+                PictureBox pb = (sender as PictureBox);
+                CurrentGun.Shoot();
 
-
-
-            //Smrt kachny   :-(
-            //  I
-            //  I
-            //  V
-            PictureBox pb = (sender as PictureBox);
-            pb.Click -= Duck_Click;
-            pb.Name = "0";
-            pb.Image = Properties.Resources.duckEnd;
-            Task.Factory.StartNew(async () => {
-                await Task.Delay(100);
-                BeginInvoke(new Action(() => pb.Dispose()));
-            });
-
-            //anonymni funkce v asynchronni anonymni funkci
+                pb.Click -= Duck_Click;
+                pb.Name = "0";
+                pb.Image = Properties.Resources.duckEnd;
+                await Task.Run(async () =>
+                {
+                    await Task.Delay(100);
+                    BeginInvoke(new Action(() => pb.Dispose()));
+                });
+            }
         }
-
-        public List<Duck> CreateDucks()
+        private void CreateBullets()
         {
-            Random rnd = new Random();
-            List<Duck> list = new List<Duck>();
-            int till;
-            if (Level % 5 == 0)
+            for(int i = 0;i != CurrentGun.CurrentAmmo;i++)
             {
-                till = Level / 5;
+                Panel Bullet = new Panel();
+                Bullet.Size = new Size(BulletZone.Width/15, BulletZone.Height);
+                Bullet.Location = new Point(BulletZone.Width/10*i+BulletZone.Width/20,0);
+                Bullet.BackColor = Color.DarkGoldenrod;
+                BulletZone.Controls.Add(Bullet);
             }
-            else { till = Level; }
-            for (int i = 0; i != till; i++)
-            {
-                list.Add(new Duck(this.Level, rnd));
-            }
-            return list;
         }
+        private void DiscardBullets()
+        {
+            while(BulletZone.Controls.Count > 0)
+            {
+                BulletZone.Controls.RemoveAt(0); 
+            }
+        }
+        
     }
 }

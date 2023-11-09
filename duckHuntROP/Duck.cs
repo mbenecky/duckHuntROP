@@ -14,6 +14,7 @@ namespace duckHuntROP
         public int Coins;
         public bool IsBoss;
         public int Speed;
+        public int HurtLevel = 0;
         public Duck() { }
         public Duck(int level, Random rnd)
         {
@@ -33,6 +34,22 @@ namespace duckHuntROP
                 this.Speed = rnd.Next(1, 6);
                 this.IsBoss = true;
             }
+        }
+        public static List<Duck>  CreateDucks(int Level)
+        {
+            Random rnd = new Random();
+            List<Duck> list = new List<Duck>();
+            int till;
+            if (Level % 5 == 0)
+            {
+                till = Level / 5;
+            }
+            else { till = Level; }
+            for (int i = 0; i != till; i++)
+            {
+                list.Add(new Duck(Level, rnd));
+            }
+            return list;
         }
         public override string ToString()
         {
