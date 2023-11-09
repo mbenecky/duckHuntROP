@@ -40,6 +40,7 @@ namespace duckHuntROP
         private List<Gun> UnlockedGuns =new List<Gun>();
         private List<Gun> AllGuns;
         public int Level = 4;
+        private int Coins = 50;
         new public int Width { get; set; }
         new public int Height { get; set; }
         private void Form1_Load(object sender, EventArgs e)
@@ -127,7 +128,7 @@ namespace duckHuntROP
             FlyZone.Hide();
             DiscardBullets();
             BulletZone.Hide();
-
+            CurrentGun.CurrentAmmo = CurrentGun.MaxAmmo;
             if (win)
             {
                 Level++;
@@ -171,20 +172,33 @@ namespace duckHuntROP
             {
                 PictureBox pb = (sender as PictureBox);
                 CurrentGun.Shoot();
-
-                pb.Click -= Duck_Click;
-                pb.Name = "0";
-                pb.Image = Properties.Resources.duckEnd;
-                await Task.Run(async () =>
+                ChangeBullets(false);
+                if(pb.Tag!= null)
                 {
-                    await Task.Delay(100);
-                    BeginInvoke(new Action(() => pb.Dispose()));
-                });
+                    string[] pbParams = pb.Tag.ToString().Split('|');
+                    int CurrentHealth = Convert.ToInt32(pbParams[0]);
+                    int CurrentCoins = Convert.ToInt32(pbParams[1]);
+                    if(CurrentHealth - CurrentGun.Damage <=0)
+                    {
+                        Coins += CurrentCoins;
+                        pb.Click -= Duck_Click;
+                        pb.Name = "0";
+                        pb.Image = Properties.Resources.duckEnd;
+                        await Task.Run(async () =>
+                        {
+                            await Task.Delay(100);
+                            BeginInvoke(new Action(() => pb.Dispose()));
+                        });
+                    } else
+                    {
+                        pb.Tag = (CurrentHealth - CurrentGun.Damage).ToString() +"|"+CurrentCoins.ToString();
+                    }
+                }
             }
         }
         private void CreateBullets()
         {
-            for(int i = 0;i != CurrentGun.CurrentAmmo;i++)
+            for(int i = 0;i != CurrentGun.MaxAmmo;i++)
             {
                 Panel Bullet = new Panel();
                 Bullet.Size = new Size(BulletZone.Width/15, BulletZone.Height);
@@ -198,6 +212,32 @@ namespace duckHuntROP
             while(BulletZone.Controls.Count > 0)
             {
                 BulletZone.Controls.RemoveAt(0); 
+            }
+        }
+        private void ChangeBullets(bool Plus)
+        {
+            if(Plus)
+            {
+                foreach(Control s in BulletZone.Controls)
+                {
+                    if(s is Panel)
+                    {
+                        (s as Panel).BackColor = Color.DarkGoldenrod;
+                    }
+                }
+            } else
+            {
+                for(int i = BulletZone.Controls.Count - 1; i >= 0; i--)
+                {
+                    if(BulletZone.Controls[i] is Panel)
+                    {
+                        if((BulletZone.Controls[i] as Panel).BackColor == Color.DarkGoldenrod)
+                        {
+                            (BulletZone.Controls[i] as Panel).BackColor = Color.LightGoldenrodYellow;
+                            break;
+                        }
+                    }
+                }
             }
         }
         

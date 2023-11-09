@@ -47,7 +47,7 @@ namespace duckHuntROP
         }
         public bool CanShoot()
         {
-            if (CurrentAmmo > 0 || !Reloading) return true;
+            if (CurrentAmmo > 0 && !Reloading) return true;
             return false;
         }
         public static List<Gun> CreateGuns()
