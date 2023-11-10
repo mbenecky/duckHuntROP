@@ -56,7 +56,7 @@ namespace duckHuntROP
         {
             List<Gun> list = new List<Gun>();
             list.Add(new Gun(5, 4, 4, 100, 4000,0, Properties.Resources.gun1));
-            list.Add(new Gun(5, 6, 6, 100, 4000,100 ,Properties.Resources.gun4));
+            list.Add(new Gun(6, 6, 6, 100, 4000,100 ,Properties.Resources.gun4));
             return list;
 
         }

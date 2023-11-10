@@ -44,6 +44,9 @@ namespace duckHuntROP
         private Gun CurrentGun;
         private List<Gun> UnlockedGuns =new List<Gun>();
         private List<Gun> AllGuns;
+
+        private List<Image> HurtLevels = new List<Image>();
+
         public int Level = 4;
         private int Coins = 50;
         new public int Width { get; set; }
@@ -101,8 +104,8 @@ namespace duckHuntROP
             FlyTimer.Tick += new EventHandler(FlyTimer_Tick);
 
             BulletZone = new Panel();
-            BulletZone.Size = new Size(Width / 4, Height / 8);
-            BulletZone.Location = new Point(0, Height - Height /8);
+            BulletZone.Size = new Size(Width / 4, Height / 16);
+            BulletZone.Location = new Point(0, Height - Height /13);
             BulletZone.BackColor = Color.Transparent;
             BulletZone.Hide();
 
@@ -114,7 +117,9 @@ namespace duckHuntROP
             Controls.Add(ShopPB);
 
 
-
+            HurtLevels.Add(Properties.Resources.Hurt1);
+            HurtLevels.Add(Properties.Resources.Hurt2);
+            HurtLevels.Add(Properties.Resources.Hurt3);
             AllGuns = Gun.CreateGuns();
             UnlockedGuns.Add(AllGuns[0]);
             CurrentGun = AllGuns[0];
@@ -156,6 +161,7 @@ namespace duckHuntROP
             FlyZone.Show();
             BulletZone.Show();
             PlayPB.Hide();
+            ShopPanel.Hide();
             this.BackgroundImage = Properties.Resources.bckImage;
             SpawnDucks();
             CreateBullets();
@@ -202,7 +208,7 @@ namespace duckHuntROP
                 DuckPB.BackgroundImageLayout = ImageLayout.Stretch;
                 DuckPB.Name = Dck.Speed.ToString();
                 DuckPB.BackColor = Color.Transparent;
-                DuckPB.Tag = Dck.Health + "|" + Dck.Coins;
+                DuckPB.Tag = Dck.Health + "|" + Dck.Coins+"|"+Dck.HurtLevel;
                 FlyZone.Controls.Add(DuckPB);
             }
         }
@@ -219,6 +225,7 @@ namespace duckHuntROP
                     string[] pbParams = pb.Tag.ToString().Split('|');
                     int CurrentHealth = Convert.ToInt32(pbParams[0]);
                     int CurrentCoins = Convert.ToInt32(pbParams[1]);
+                    int CurrentHurtLevel = Convert.ToInt32(pbParams[2]);
                     if(CurrentHealth - CurrentGun.Damage <=0)
                     {
                         Coins += CurrentCoins;
@@ -232,7 +239,14 @@ namespace duckHuntROP
                         });
                     } else
                     {
-                        pb.Tag = (CurrentHealth - CurrentGun.Damage).ToString() +"|"+CurrentCoins.ToString();
+                        pb.SizeMode = PictureBoxSizeMode.StretchImage;
+                        if(CurrentHurtLevel!=HurtLevels.Count)
+                        {
+                            CurrentHurtLevel++;
+                        }
+                        pb.Image = HurtLevels[CurrentHurtLevel-1];
+                        pb.Tag = (CurrentHealth - CurrentGun.Damage).ToString() +"|"+CurrentCoins.ToString()+"|"+CurrentHurtLevel.ToString();
+                       
                     }
                 }
             }
@@ -252,8 +266,11 @@ namespace duckHuntROP
         {
             if(e.KeyData == Keys.R && FlyZone.Visible)
             {
-                CurrentGun.Reload();
-                ChangeBullets(true);
+                CurrentGun.Reload(); 
+                if (CurrentGun.CurrentAmmo != CurrentGun.MaxAmmo)
+                {
+                    ChangeBullets(true);
+                } //if je pojisteni pred moznym bugem kdy uzivatel klikne R pred tim nez dobehne v CurrentGun.Shoot delayROF
             }
         }
         private void Shop_Click(object sender, EventArgs e)
@@ -289,7 +306,7 @@ namespace duckHuntROP
                 BulletZone.Controls.RemoveAt(0); 
             }
         }
-        private void ChangeBullets(bool Plus)
+        private async Task ChangeBullets(bool Plus)
         {
             if(Plus)
             {
@@ -297,6 +314,7 @@ namespace duckHuntROP
                 {
                     if(s is Panel)
                     {
+                        await Task.Run(() => Task.Delay(CurrentGun.DelayReload / CurrentGun.MaxAmmo));
                         (s as Panel).BackColor = Color.DarkGoldenrod;
                     }
                 }

@@ -29,7 +29,7 @@ namespace duckHuntROP
             else
             {
                 this.Img = Properties.Resources.duck6;
-                this.Health = rnd.Next(15, 20);
+                this.Health = rnd.Next(30, 50);
                 this.Coins = rnd.Next(50, 100);
                 this.Speed = rnd.Next(1, 6);
                 this.IsBoss = true;
