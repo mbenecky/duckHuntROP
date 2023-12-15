@@ -42,13 +42,14 @@ namespace duckHuntROP
 
 
         private Gun CurrentGun;
-        private List<Gun> UnlockedGuns =new List<Gun>();
         private List<Gun> AllGuns;
-
         private List<Image> HurtLevels = new List<Image>();
 
-        public int Level = 4;
+        public int Level = 1;
         private int Coins = 50;
+        private List<Gun> UnlockedGuns = new List<Gun>();
+        //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
+
         new public int Width { get; set; }
         new public int Height { get; set; }
         private void Form1_Load(object sender, EventArgs e)
@@ -184,7 +185,6 @@ namespace duckHuntROP
             {
                 for (int i = 0; i != FlyZone.Controls.Count; i++)
                 {
-
                     object ob = FlyZone.Controls[i];
                     if (ob is PictureBox)
                     {
@@ -196,6 +196,7 @@ namespace duckHuntROP
         }
         public void Recoil()
         {
+            
             Random rnd = new Random();
             this.Cursor = Cursor.Current;
             Cursor.Position = new Point(Cursor.Position.X + rnd.Next(-Width/20,Width/20), Cursor.Position.Y-rnd.Next(0,Height/20) );
@@ -287,6 +288,9 @@ namespace duckHuntROP
             if(FlyZone.Visible == false)
             {
                 ShopPanel.Visible = !ShopPanel.Visible;
+            } else
+            {
+                //throw errorlog in logs
             }
         }
         private void Gun_Buy(object sender,EventArgs e)
