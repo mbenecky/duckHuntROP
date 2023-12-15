@@ -194,7 +194,13 @@ namespace duckHuntROP
                 }
             }
         }
-
+        public void Recoil()
+        {
+            Random rnd = new Random();
+            this.Cursor = Cursor.Current;
+            Cursor.Position = new Point(Cursor.Position.X + rnd.Next(-Width/20,Width/20), Cursor.Position.Y-rnd.Next(0,Height/20) );
+            //pozdeji zmenit na currentgun.recoil nebo pridat parametr s recoilem :-)
+        }
         public void SpawnDucks()
         {
             Random rnd = new Random();
@@ -219,6 +225,7 @@ namespace duckHuntROP
             {
                 PictureBox pb = (sender as PictureBox);
                 CurrentGun.Shoot();
+                Recoil();
                 ChangeBullets(false);
                 if(pb.Tag!= null)
                 {
@@ -250,7 +257,9 @@ namespace duckHuntROP
                     }
                 }
             }
-        }
+       }
+
+        
         private void CreateBullets()
         {
             for(int i = 0;i != CurrentGun.MaxAmmo;i++)
