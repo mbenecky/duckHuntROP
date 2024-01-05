@@ -46,7 +46,7 @@ namespace duckHuntROP
         private List<Image> HurtLevels = new List<Image>();
 
         public int Level = 1;
-        private int Coins = 50;
+        private int Coins = 4450;
         private List<Gun> UnlockedGuns = new List<Gun>();
         //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
 
@@ -263,8 +263,9 @@ namespace duckHuntROP
         
         private void CreateBullets()
         {
-            for(int i = 0;i != CurrentGun.MaxAmmo;i++)
+            for(int i = 0;i != CurrentGun.MaxAmmo;i++) 
             {
+                //pri hodne bullets vyjedou z bulletzone, moznost udelat to tak aby se bulletzone.width/pocbullets a mel bys jak velka ma bejt kazda kulka +-bulletzone.Width/20 nebo neco
                 Panel Bullet = new Panel();
                 Bullet.Size = new Size(BulletZone.Width/15, BulletZone.Height);
                 Bullet.Location = new Point(BulletZone.Width/10*i+BulletZone.Width/20,0);
@@ -303,6 +304,9 @@ namespace duckHuntROP
                     Coins -= gun.Cost;
                     UnlockedGuns.Add(gun);
                     MessageBox.Show("koupil");
+                }else
+                {
+                    MessageBox.Show("drahe " + gun.Cost + " to stoji a ty mas jen " + Coins);
                 }
             } else
             {
