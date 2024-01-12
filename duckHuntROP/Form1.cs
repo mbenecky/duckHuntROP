@@ -38,6 +38,7 @@ namespace duckHuntROP
         
         private PictureBox ShopPB;
         private PictureBox PlayPB;
+        private PictureBox NewGamePB;
         //pictureboxes fungujici jako buttony
 
 
@@ -78,6 +79,14 @@ namespace duckHuntROP
             ShopPB.BackColor = Color.Transparent;
             ShopPB.Click += new EventHandler(Shop_Click);
 
+            NewGamePB = new PictureBox();
+            NewGamePB.Size = new Size(Width / 10, Height / 10);
+            //Dodelat location
+            NewGamePB.BackgroundImage = Properties.Resources.huntButton;
+            NewGamePB.BackgroundImageLayout = ImageLayout.Stretch;
+            NewGamePB.BackColor = Color.Transparent;
+            NewGamePB.Click += new EventHandler(NewGame_Click);
+
 
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
@@ -116,7 +125,7 @@ namespace duckHuntROP
             Controls.Add(BulletZone);
             Controls.Add(PlayPB);
             Controls.Add(ShopPB);
-
+            //Controls.Add(NewGamePB);
 
             HurtLevels.Add(Properties.Resources.Hurt1);
             HurtLevels.Add(Properties.Resources.Hurt2);
@@ -156,6 +165,14 @@ namespace duckHuntROP
                     pb.Location = new Point(Convert.ToInt32(pb.Name) + pb.Location.X, pb.Location.Y);
                 }
             }
+        }
+        private void NewGame_Click(object sender, EventArgs e)
+        {
+            Level = 1;
+            Gun firstGun = UnlockedGuns[0];
+            List<Gun> list = new List<Gun>();
+            list.Add(firstGun);
+            UnlockedGuns = list;
         }
         private void Hunt_Click(object sender, EventArgs e)
         {
@@ -263,12 +280,18 @@ namespace duckHuntROP
         
         private void CreateBullets()
         {
+            double multiplier = 1;
+            if(CurrentGun.MaxAmmo >8)
+            {
+                multiplier = 0.5;
+            }
             for(int i = 0;i != CurrentGun.MaxAmmo;i++) 
             {
                 //pri hodne bullets vyjedou z bulletzone, moznost udelat to tak aby se bulletzone.width/pocbullets a mel bys jak velka ma bejt kazda kulka +-bulletzone.Width/20 nebo neco
+                //done
                 Panel Bullet = new Panel();
-                Bullet.Size = new Size(BulletZone.Width/15, BulletZone.Height);
-                Bullet.Location = new Point(BulletZone.Width/10*i+BulletZone.Width/20,0);
+                Bullet.Size = new Size(Convert.ToInt32(BulletZone.Width/15*multiplier), BulletZone.Height);
+                Bullet.Location = new Point(Convert.ToInt32((BulletZone.Width/10*i+BulletZone.Width/20)*multiplier),0);
                 Bullet.BackColor = Color.DarkGoldenrod;
                 BulletZone.Controls.Add(Bullet);
             }
