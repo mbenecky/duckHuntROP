@@ -34,7 +34,7 @@ namespace duckHuntROP
         private Panel BulletZone;
         private Panel ShopPanel;
         private Panel EndPanel;
-
+        private Panel MenuPanel;
 
         private Timer FlyTimer;
         
@@ -57,6 +57,17 @@ namespace duckHuntROP
         private List<Gun> UnlockedGuns = new List<Gun>();
         //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
 
+        //Co vsechno potrebuju ulozit pri loadovani hry?
+        //1. Level
+        //2. Coins
+        //3. UnlockedGuns
+        //4. CurrentGun?
+
+        //Proc ne lockedGuns?
+        //LockedGuns je jen UnlockedGuns.Intersect(AllGuns);
+        //teda myslim :-D
+
+
         new public int Width { get; set; }
         new public int Height { get; set; }
         private void Form1_Load(object sender, EventArgs e)
@@ -68,6 +79,13 @@ namespace duckHuntROP
 
             Width = this.Size.Width;
             Height = this.Size.Height;
+
+            MenuPanel = new Panel();
+            MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
+            MenuPanel.Location = new Point(0, Height / 11);
+            MenuPanel.BackColor = Color.Red;
+            MenuPanel.Show();
+
 
             PlayPB = new PictureBox();
             PlayPB.Size = new Size(Width / 10, Height / 10);
@@ -93,6 +111,8 @@ namespace duckHuntROP
             NewGamePB.BackColor = Color.Transparent;
             NewGamePB.Click += new EventHandler(NewGame_Click);
 
+            MenuPanel.Controls.Add(PlayPB);
+            MenuPanel.Controls.Add(ShopPB);
 
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
@@ -129,8 +149,7 @@ namespace duckHuntROP
             Controls.Add(ShopPanel);
             Controls.Add(FlyZone);
             Controls.Add(BulletZone);
-            Controls.Add(PlayPB);
-            Controls.Add(ShopPB);
+            Controls.Add(MenuPanel);
             //Controls.Add(NewGamePB);  
 
             HurtLevels.Add(Properties.Resources.Hurt1);
@@ -272,15 +291,12 @@ namespace duckHuntROP
         }
         public void LockAll()
         {
-            PlayPB.Enabled = false;
-            ShopPB.Enabled = false;
-            NewGamePB.Enabled = false;
+            
+            MenuPanel.Enabled = false;
         }
         public void UnlockAll()
         {
-            PlayPB.Enabled = true;
-            ShopPB.Enabled = true;
-            NewGamePB.Enabled = true;
+            MenuPanel.Enabled = true;
         }
         public void Recoil()
         {
@@ -378,6 +394,10 @@ namespace duckHuntROP
             if(e.KeyData == Keys.Escape)
             {
                 Application.Exit();
+            }
+            if(e.KeyData == Keys.Left)
+            {
+                End(false);
             }
         }
         private void Shop_Click(object sender, EventArgs e)
