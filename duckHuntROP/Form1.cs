@@ -33,6 +33,8 @@ namespace duckHuntROP
         private Panel FlyZone;
         private Panel BulletZone;
         private Panel ShopPanel;
+        private Panel EndPanel;
+
 
         private Timer FlyTimer;
         
@@ -48,6 +50,7 @@ namespace duckHuntROP
 
         public int Level = 1;
         private int Coins = 4450;
+        private int CoinsPerRound = 0;
         private List<Gun> UnlockedGuns = new List<Gun>();
         //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
 
@@ -125,7 +128,7 @@ namespace duckHuntROP
             Controls.Add(BulletZone);
             Controls.Add(PlayPB);
             Controls.Add(ShopPB);
-            //Controls.Add(NewGamePB);
+            //Controls.Add(NewGamePB);  
 
             HurtLevels.Add(Properties.Resources.Hurt1);
             HurtLevels.Add(Properties.Resources.Hurt2);
@@ -173,6 +176,7 @@ namespace duckHuntROP
             List<Gun> list = new List<Gun>();
             list.Add(firstGun);
             UnlockedGuns = list;
+            Coins = 50;
         }
         private void Hunt_Click(object sender, EventArgs e)
         {
@@ -180,6 +184,7 @@ namespace duckHuntROP
             BulletZone.Show();
             PlayPB.Hide();
             ShopPanel.Hide();
+            CoinsPerRound = 0;
             this.BackgroundImage = Properties.Resources.bckImage;
             SpawnDucks();
             CreateBullets();
@@ -210,10 +215,61 @@ namespace duckHuntROP
                     }
                 }
             }
+            EndScreen(win);
+            LockAll();
+        }
+        public void EndScreen(bool win)
+        {
+            EndPanel = new Panel();
+            EndPanel.Size = new Size(Width / 4, Height / 4);
+            EndPanel.Location = new Point(Width / 2-Width/8, Height / 2-Height/8);
+            EndPanel.BackgroundImage = Properties.Resources.endScreen;
+            EndPanel.BackgroundImageLayout = ImageLayout.Stretch;
+            this.Controls.Add(EndPanel);
+            Label EndLabel = new Label();
+            if(win)
+            {
+                EndLabel.Text = "Dals to! :-)\n";
+            } else
+            {
+                EndLabel.Text = "Mozna priste! :-(\n";
+            }
+            EndLabel.Text += "Vydelal sis: " + CoinsPerRound + " korunek nyni mas " + Coins + " korunek";
+            
+            EndLabel.MaximumSize = new Size(EndPanel.Width-EndPanel.Width / 16, EndPanel.Height-EndPanel.Height / 4);
+            EndLabel.Location = new Point(EndPanel.Width / 32, EndPanel.Height/8);
+            EndLabel.BackColor = Color.Transparent;
+            EndLabel.Font = new Font(EndLabel.Font.FontFamily, EndPanel.Height / 20);
+            EndLabel.AutoSize = true;
+            
+            Button EndButton = new Button();
+            EndButton.Size = new Size(EndPanel.Width / 8, EndPanel.Height/8);
+            EndButton.Text = "Ok";
+            EndButton.Location = new Point(EndPanel.Width / 2-EndPanel.Width/16, EndPanel.Height / 2 + EndPanel.Height / 4);
+            EndButton.Click += new EventHandler(EndButton_Click);
+            EndPanel.Controls.Add(EndLabel);
+            EndPanel.Controls.Add(EndButton);
+        }
+        private void EndButton_Click(object sender, EventArgs e)
+        {
+            Button sndr = (sender as Button);
+            UnlockAll();
+            sndr.Parent.Dispose();
+        }
+        public void LockAll()
+        {
+            PlayPB.Enabled = false;
+            ShopPB.Enabled = false;
+            NewGamePB.Enabled = false;
+        }
+        public void UnlockAll()
+        {
+            PlayPB.Enabled = true;
+            ShopPB.Enabled = true;
+            NewGamePB.Enabled = true;
         }
         public void Recoil()
         {
-            
             Random rnd = new Random();
             this.Cursor = Cursor.Current;
             Cursor.Position = new Point(Cursor.Position.X + rnd.Next(-Width/20,Width/20), Cursor.Position.Y-rnd.Next(0,Height/20) );
@@ -254,6 +310,7 @@ namespace duckHuntROP
                     if(CurrentHealth - CurrentGun.Damage <=0)
                     {
                         Coins += CurrentCoins;
+                        CoinsPerRound += CurrentCoins;
                         pb.Click -= Duck_Click;
                         pb.Name = "0";
                         pb.Image = Properties.Resources.duckEnd;
@@ -275,9 +332,7 @@ namespace duckHuntROP
                     }
                 }
             }
-       }
-
-        
+        }
         private void CreateBullets()
         {
             double multiplier = 1;
@@ -373,6 +428,5 @@ namespace duckHuntROP
                 }
             }
         }
-        
     }
 }

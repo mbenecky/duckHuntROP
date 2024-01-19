@@ -93,6 +93,16 @@ namespace duckHuntROP.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap duck2 {
+            get {
+                object obj = ResourceManager.GetObject("duck2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap duck6 {
             get {
                 object obj = ResourceManager.GetObject("duck6", resourceCulture);
@@ -106,6 +116,26 @@ namespace duckHuntROP.Properties {
         internal static System.Drawing.Bitmap duckEnd {
             get {
                 object obj = ResourceManager.GetObject("duckEnd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap duckTemplate {
+            get {
+                object obj = ResourceManager.GetObject("duckTemplate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap endScreen {
+            get {
+                object obj = ResourceManager.GetObject("endScreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

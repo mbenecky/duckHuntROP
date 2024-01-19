@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace duckHuntROP
 {
@@ -20,7 +21,13 @@ namespace duckHuntROP
         {
             if (level % 5 != 0)
             {
-                this.Img = Properties.Resources.duck1;
+                if(rnd.Next(0,2) == 0)
+                {
+                    this.Img = Properties.Resources.duck1;
+                } else
+                {
+                    this.Img = Properties.Resources.duck2;
+                }
                 this.Health = rnd.Next(3, 5);
                 this.Coins = rnd.Next(10, 30);
                 this.Speed = rnd.Next(5, 20);
