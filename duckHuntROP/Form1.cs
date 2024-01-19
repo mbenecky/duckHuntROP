@@ -48,8 +48,11 @@ namespace duckHuntROP
         private List<Gun> AllGuns;
         private List<Image> HurtLevels = new List<Image>();
 
+        private List<Image> LockedGuns = new List<Image>();
+        private List<Image> SelectedGuns = new List<Image>();
+
         public int Level = 1;
-        private int Coins = 4450;
+        private int Coins = 7500;
         private int CoinsPerRound = 0;
         private List<Gun> UnlockedGuns = new List<Gun>();
         //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
@@ -77,7 +80,7 @@ namespace duckHuntROP
             ShopPB = new PictureBox();
             ShopPB.Size =new Size(Width / 10, Height / 10);
             ShopPB.Location = new Point(Width / 32, Height / 12 + Height / 8);
-            ShopPB.BackgroundImage = Properties.Resources.huntButton;
+            ShopPB.BackgroundImage = Properties.Resources.shopButton;
             ShopPB.BackgroundImageLayout = ImageLayout.Stretch;
             ShopPB.BackColor = Color.Transparent;
             ShopPB.Click += new EventHandler(Shop_Click);
@@ -133,6 +136,15 @@ namespace duckHuntROP
             HurtLevels.Add(Properties.Resources.Hurt1);
             HurtLevels.Add(Properties.Resources.Hurt2);
             HurtLevels.Add(Properties.Resources.Hurt3);
+
+            LockedGuns.Add(Properties.Resources.gun1Selected); //error prvni zbran nemuze byt lockla
+            LockedGuns.Add(Properties.Resources.gun4Locked);
+            LockedGuns.Add(Properties.Resources.gun6Locked);
+
+            SelectedGuns.Add(Properties.Resources.gun1Selected);
+            SelectedGuns.Add(Properties.Resources.gun4Selected);
+            SelectedGuns.Add(Properties.Resources.gun6Selected);
+
             AllGuns = Gun.CreateGuns();
             UnlockedGuns.Add(AllGuns[0]);
             CurrentGun = AllGuns[0];
@@ -140,8 +152,8 @@ namespace duckHuntROP
             {
                 PictureBox gunPB = new PictureBox();
                 gunPB.Size = new Size(Width / 4, Height / 20);
-                gunPB.Location = new Point(Width / 8, Height / 16 * i + Height / 16);
-                gunPB.BackgroundImage = AllGuns[i].Img;
+                gunPB.Location = new Point(Width / 8, Height / 16 * i + Height / 16);                
+                gunPB.BackgroundImage = LockedGuns[i];
                 gunPB.BackgroundImageLayout = ImageLayout.Stretch;
                 gunPB.BackColor = Color.Transparent;
                 gunPB.Click += new EventHandler(Gun_Buy);
@@ -242,9 +254,11 @@ namespace duckHuntROP
             EndLabel.Font = new Font(EndLabel.Font.FontFamily, EndPanel.Height / 20);
             EndLabel.AutoSize = true;
             
-            Button EndButton = new Button();
+            PictureBox EndButton = new PictureBox();
             EndButton.Size = new Size(EndPanel.Width / 8, EndPanel.Height/8);
-            EndButton.Text = "Ok";
+            EndButton.BackgroundImage = Properties.Resources.okButton;
+            EndButton.BackgroundImageLayout = ImageLayout.Stretch;
+            EndButton.BackColor = Color.Transparent;
             EndButton.Location = new Point(EndPanel.Width / 2-EndPanel.Width/16, EndPanel.Height / 2 + EndPanel.Height / 4);
             EndButton.Click += new EventHandler(EndButton_Click);
             EndPanel.Controls.Add(EndLabel);
@@ -252,7 +266,7 @@ namespace duckHuntROP
         }
         private void EndButton_Click(object sender, EventArgs e)
         {
-            Button sndr = (sender as Button);
+            PictureBox sndr = (sender as PictureBox);
             UnlockAll();
             sndr.Parent.Dispose();
         }
@@ -361,6 +375,10 @@ namespace duckHuntROP
                     ChangeBullets(true);
                 } //if je pojisteni pred moznym bugem kdy uzivatel klikne R pred tim nez dobehne v CurrentGun.Shoot delayROF
             }
+            if(e.KeyData == Keys.Escape)
+            {
+                Application.Exit();
+            }
         }
         private void Shop_Click(object sender, EventArgs e)
         {
@@ -374,6 +392,9 @@ namespace duckHuntROP
         }
         private void Gun_Buy(object sender,EventArgs e)
         {
+
+
+            //Gun list -> gun1, gun4, gun6;
             Gun gun = AllGuns[Convert.ToInt32((sender as PictureBox).Tag)];
             if (!UnlockedGuns.Contains(gun))
             {
@@ -381,16 +402,17 @@ namespace duckHuntROP
                 {
                     Coins -= gun.Cost;
                     UnlockedGuns.Add(gun);
-                    MessageBox.Show("koupil");
+                    (sender as PictureBox).BackgroundImage = gun.Img;
                 }else
                 {
                     MessageBox.Show("drahe " + gun.Cost + " to stoji a ty mas jen " + Coins);
                 }
             } else
             {
+                (ShopPanel.Controls[CurrentGun.ID] as PictureBox).BackgroundImage = CurrentGun.Img;
                 CurrentGun = gun;
                 gun.CurrentAmmo = gun.MaxAmmo;
-                MessageBox.Show("Vlastni");
+                (sender as PictureBox).BackgroundImage = SelectedGuns[Convert.ToInt32((sender as PictureBox).Tag)];
             }
             
         }

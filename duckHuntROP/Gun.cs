@@ -9,6 +9,8 @@ namespace duckHuntROP
 {
     public class Gun
     {
+
+        public int ID;
         public int Damage;
         public int CurrentAmmo;
         public int MaxAmmo;
@@ -18,7 +20,7 @@ namespace duckHuntROP
         private bool Reloading = false;
         public Image Img;
         public Gun() { }
-        public Gun(int damage, int currentAmmo, int maxAmmo, int delayROF,int delayReload,int cost,Image img)
+        public Gun(int damage, int currentAmmo, int maxAmmo, int delayROF,int delayReload, int cost, Image img, int iD)
         {
             Damage = damage;
             CurrentAmmo = currentAmmo;
@@ -27,6 +29,7 @@ namespace duckHuntROP
             DelayReload = delayReload;
             Cost = cost;
             Img = img;
+            ID = iD;    
         }
         public async Task Shoot()
         {
@@ -55,9 +58,9 @@ namespace duckHuntROP
         public static List<Gun> CreateGuns()
         {
             List<Gun> list = new List<Gun>();
-            list.Add(new Gun(5, 4, 4, 100, 4000,0, Properties.Resources.gun1));
-            list.Add(new Gun(6, 6, 6, 100, 4000,100 ,Properties.Resources.gun4));
-            list.Add(new Gun(2, 12, 12, 30, 4000, 4000, Properties.Resources.gun6));
+            list.Add(new Gun(5, 4, 4, 100, 4000,0, Properties.Resources.gun1, 0));
+            list.Add(new Gun(6, 6, 6, 100, 4000,100 ,Properties.Resources.gun4,1));
+            list.Add(new Gun(2, 12, 12, 30, 4000, 7000, Properties.Resources.gun6,2));
             return list;
 
         }

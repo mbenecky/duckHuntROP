@@ -145,11 +145,26 @@
   <data name="gun1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gun1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gun1Selected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gun1Selected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gun4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gun4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gun4Locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gun2Locked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gun4Selected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gun2Selected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gun6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gun6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gun6Locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gun6Locked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gun6Selected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gun6Selected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="huntButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\huntButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -162,5 +177,11 @@
   </data>
   <data name="Hurt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Hurt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="okButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\okButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shopButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shopButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

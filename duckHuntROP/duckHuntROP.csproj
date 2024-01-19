@@ -127,5 +127,26 @@
   <ItemGroup>
     <None Include="Resources\endScreen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gun2Locked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gun2Selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gun6Locked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gun6Selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gun1Selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shopButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\okButton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
