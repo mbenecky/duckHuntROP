@@ -35,12 +35,14 @@ namespace duckHuntROP
         private Panel ShopPanel;
         private Panel EndPanel;
         private Panel MenuPanel;
+        private Panel StartPanel;
 
         private Timer FlyTimer;
         
         private PictureBox ShopPB;
         private PictureBox PlayPB;
         private PictureBox NewGamePB;
+        private PictureBox BackPB;
         //pictureboxes fungujici jako buttony
 
 
@@ -52,7 +54,8 @@ namespace duckHuntROP
         private List<Image> SelectedGuns = new List<Image>();
 
         public int Level = 1;
-        private int Coins = 7500;
+        private int Coins = 50;
+        private int CoinsFromBeginning = 7500;
         private int CoinsPerRound = 0;
         private List<Gun> UnlockedGuns = new List<Gun>();
         //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
@@ -84,8 +87,13 @@ namespace duckHuntROP
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
             MenuPanel.Location = new Point(0, Height / 11);
             MenuPanel.BackColor = Color.Red;
-            MenuPanel.Show();
+            MenuPanel.Hide();
 
+            StartPanel = new Panel();
+            StartPanel.Size = new Size(Width / 2, Height - Height / 4);
+            StartPanel.Location = MenuPanel.Location;
+            StartPanel.BackColor = Color.Blue;
+            StartPanel.Show();
 
             PlayPB = new PictureBox();
             PlayPB.Size = new Size(Width / 10, Height / 10);
@@ -103,16 +111,29 @@ namespace duckHuntROP
             ShopPB.BackColor = Color.Transparent;
             ShopPB.Click += new EventHandler(Shop_Click);
 
+            BackPB = new PictureBox();
+            BackPB.Size = new Size(Width / 10, Height / 20);
+            BackPB.Location = new Point(Width / 32, Height / 40);
+            BackPB.BackgroundImage = Properties.Resources.unknown;
+            BackPB.BackgroundImageLayout = ImageLayout.Stretch;
+            BackPB.BackColor = Color.Transparent;
+            BackPB.Click+= new EventHandler(Back_Click);
+
             NewGamePB = new PictureBox();
             NewGamePB.Size = new Size(Width / 10, Height / 10);
-            //Dodelat location
-            NewGamePB.BackgroundImage = Properties.Resources.huntButton;
+            NewGamePB.Location = PlayPB.Location;
+            NewGamePB.BackgroundImage = Properties.Resources.unknown;
             NewGamePB.BackgroundImageLayout = ImageLayout.Stretch;
             NewGamePB.BackColor = Color.Transparent;
             NewGamePB.Click += new EventHandler(NewGame_Click);
+            
 
+
+            MenuPanel.Controls.Add(BackPB);
             MenuPanel.Controls.Add(PlayPB);
             MenuPanel.Controls.Add(ShopPB);
+
+            StartPanel.Controls.Add(NewGamePB);
 
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
@@ -150,7 +171,7 @@ namespace duckHuntROP
             Controls.Add(FlyZone);
             Controls.Add(BulletZone);
             Controls.Add(MenuPanel);
-            //Controls.Add(NewGamePB);  
+            Controls.Add(StartPanel);  
 
             HurtLevels.Add(Properties.Resources.Hurt1);
             HurtLevels.Add(Properties.Resources.Hurt2);
@@ -204,16 +225,38 @@ namespace duckHuntROP
         {
             Level = 1;
             Gun firstGun = UnlockedGuns[0];
-            List<Gun> list = new List<Gun>();
-            list.Add(firstGun);
-            UnlockedGuns = list;
-            Coins = 50;
+            UnlockedGuns.Clear();
+            UnlockedGuns.Add(firstGun);
+            Coins = CoinsFromBeginning;
+            StartPanel.Hide();
+            MenuPanel.Show();
+
+
+            //Nastaveni zakladni guny
+            int i = 0;
+            CurrentGun = UnlockedGuns[0];
+            foreach (object ob in ShopPanel.Controls)
+            {
+                if (ob is PictureBox)
+                {
+                    (ob as PictureBox).BackgroundImage = LockedGuns[i];
+                    i++;
+                }
+            }
+            (ShopPanel.Controls[0] as PictureBox).BackgroundImage = SelectedGuns[0];
+
+        }
+        private void Back_Click(object sender, EventArgs e)
+        {
+            StartPanel.Show();
+            MenuPanel.Hide();
+            ShopPanel.Hide();
         }
         private void Hunt_Click(object sender, EventArgs e)
         {
             FlyZone.Show();
             BulletZone.Show();
-            PlayPB.Hide();
+            MenuPanel.Hide();
             ShopPanel.Hide();
             CoinsPerRound = 0;
             this.BackgroundImage = Properties.Resources.bckImage;
@@ -225,7 +268,7 @@ namespace duckHuntROP
         {
             this.BackgroundImage = Properties.Resources.bckImageNight;
             FlyTimer.Stop();
-            PlayPB.Show();
+            MenuPanel.Show();
             FlyZone.Hide();
             DiscardBullets();
             BulletZone.Hide();
