@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace duckHuntROP
 {
@@ -36,6 +37,8 @@ namespace duckHuntROP
         private Panel EndPanel;
         private Panel MenuPanel;
         private Panel StartPanel;
+        private Panel OptionsPanel;
+
 
         private Timer FlyTimer;
         
@@ -43,8 +46,20 @@ namespace duckHuntROP
         private PictureBox PlayPB;
         private PictureBox NewGamePB;
         private PictureBox BackPB;
+        private PictureBox OptionsPB;
+        private PictureBox SoundPB;
         //pictureboxes fungujici jako buttony
 
+        private PictureBox kReloadPB;
+        private PictureBox kEndPB;
+        private PictureBox kBackPB;
+
+        private Keys kReload;
+        private Keys kEnd;
+        private Keys kBack;
+
+        private bool kListening = false;
+        private bool PlaySound = true;
 
         private Gun CurrentGun;
         private List<Gun> AllGuns;
@@ -52,6 +67,11 @@ namespace duckHuntROP
 
         private List<Image> LockedGuns = new List<Image>();
         private List<Image> SelectedGuns = new List<Image>();
+
+
+        SoundPlayer sp = new SoundPlayer(Properties.Resources.gunshot);
+        SoundPlayer sp1 = new SoundPlayer(Properties.Resources.reload1);
+        SoundPlayer sp2 = new SoundPlayer(Properties.Resources.reload2);
 
         public int Level = 1;
         private int Coins = 50;
@@ -83,6 +103,9 @@ namespace duckHuntROP
             Width = this.Size.Width;
             Height = this.Size.Height;
 
+
+
+
             MenuPanel = new Panel();
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
             MenuPanel.Location = new Point(0, Height / 11);
@@ -94,6 +117,12 @@ namespace duckHuntROP
             StartPanel.Location = MenuPanel.Location;
             StartPanel.BackColor = Color.Blue;
             StartPanel.Show();
+
+            OptionsPanel = new Panel();
+            OptionsPanel.Size = new Size(Width / 2 - Width / 6, Height - Height / 4);
+            OptionsPanel.Location = new Point(Width / 6, 0);
+            OptionsPanel.BackColor = Color.Green;
+            OptionsPanel.Hide();
 
             PlayPB = new PictureBox();
             PlayPB.Size = new Size(Width / 10, Height / 10);
@@ -118,7 +147,7 @@ namespace duckHuntROP
             BackPB.BackgroundImageLayout = ImageLayout.Stretch;
             BackPB.BackColor = Color.Transparent;
             BackPB.Click+= new EventHandler(Back_Click);
-
+            
             NewGamePB = new PictureBox();
             NewGamePB.Size = new Size(Width / 10, Height / 10);
             NewGamePB.Location = PlayPB.Location;
@@ -126,14 +155,58 @@ namespace duckHuntROP
             NewGamePB.BackgroundImageLayout = ImageLayout.Stretch;
             NewGamePB.BackColor = Color.Transparent;
             NewGamePB.Click += new EventHandler(NewGame_Click);
-            
 
+            OptionsPB = new PictureBox();
+            OptionsPB.Size = NewGamePB.Size;
+            OptionsPB.Location = ShopPB.Location;
+            OptionsPB.BackgroundImage = Properties.Resources.unknown;
+            OptionsPB.BackgroundImageLayout = ImageLayout.Stretch;
+            OptionsPB.BackColor = Color.Transparent;
+            OptionsPB.Click += new EventHandler(Options_Click);
+
+            kReloadPB = new PictureBox();
+            kReloadPB.Size = new Size(Width / 16, Width / 16);
+            kReloadPB.Location = new Point(Width / 16, Height / 16);
+            kReloadPB.Name = "Reload";
+            kReloadPB.BackgroundImage = Properties.Resources.unknown;
+            kReloadPB.Tag = "0";
+            kReloadPB.Click += new EventHandler(Global_Click);
+
+            kEndPB = new PictureBox();
+            kEndPB.Size = kReloadPB.Size;
+            kEndPB.Location = new Point(Width / 16, Height / 16 + kEndPB.Size.Height);
+            kEndPB.Name = "End";
+            kEndPB.BackgroundImage = Properties.Resources.unknown;
+            kEndPB.Tag = "0";
+            kEndPB.Click += new EventHandler(Global_Click);
+
+            kBackPB = new PictureBox();
+            kBackPB.Size = kReloadPB.Size;
+            kBackPB.Location = new Point(Width / 16, Height / 16 + kBackPB.Size.Height * 2);
+            kBackPB.Name = "Back";
+            kBackPB.BackgroundImage = Properties.Resources.unknown;
+            kBackPB.Tag = "0";
+            kBackPB.Click += new EventHandler(Global_Click);
+
+            SoundPB = new PictureBox();
+            SoundPB.Size = new Size(Width / 8, Height/16);
+            SoundPB.Location = new Point(Width / 16, Height / 4);
+            SoundPB.BackgroundImage = Properties.Resources.unknown;
+            SoundPB.Click += new EventHandler(Sound_Click);
 
             MenuPanel.Controls.Add(BackPB);
             MenuPanel.Controls.Add(PlayPB);
             MenuPanel.Controls.Add(ShopPB);
 
             StartPanel.Controls.Add(NewGamePB);
+            StartPanel.Controls.Add(OptionsPB);
+            StartPanel.Controls.Add(OptionsPanel);
+
+            OptionsPanel.Controls.Add(kReloadPB);
+            OptionsPanel.Controls.Add(kEndPB);
+            OptionsPanel.Controls.Add(kBackPB);
+            OptionsPanel.Controls.Add(SoundPB);
+
 
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
@@ -146,9 +219,6 @@ namespace duckHuntROP
             ShopPanel.Location = new Point(Width/6, Height / 11);
             ShopPanel.BackColor = Color.Red;
             ShopPanel.Hide();
-
-            
-
 
             EndZone = new Panel();
             EndZone.Size = new Size(Width / 32, FlyZone.Height);
@@ -165,7 +235,6 @@ namespace duckHuntROP
             BulletZone.Location = new Point(0, Height - Height /13);
             BulletZone.BackColor = Color.Transparent;
             BulletZone.Hide();
-
 
             Controls.Add(ShopPanel);
             Controls.Add(FlyZone);
@@ -184,6 +253,10 @@ namespace duckHuntROP
             SelectedGuns.Add(Properties.Resources.gun1Selected);
             SelectedGuns.Add(Properties.Resources.gun4Selected);
             SelectedGuns.Add(Properties.Resources.gun6Selected);
+
+            kReload = Keys.R;
+            kEnd = Keys.Escape;
+            kBack = Keys.Left;
 
             AllGuns = Gun.CreateGuns();
             UnlockedGuns.Add(AllGuns[0]);
@@ -251,6 +324,21 @@ namespace duckHuntROP
             StartPanel.Show();
             MenuPanel.Hide();
             ShopPanel.Hide();
+        }
+        private void Global_Click(object sender, EventArgs e)
+        {
+            kListening = true;
+            (sender as PictureBox).Tag = "1";
+            MessageBox.Show("Listening");
+        }
+        private void Sound_Click(object sender, EventArgs e)
+        {
+            PlaySound = !PlaySound;
+            //zmena pb
+        }
+        private void Options_Click(object sender, EventArgs e)
+        {
+            OptionsPanel.Visible = !OptionsPanel.Visible;
         }
         private void Hunt_Click(object sender, EventArgs e)
         {
@@ -334,7 +422,6 @@ namespace duckHuntROP
         }
         public void LockAll()
         {
-            
             MenuPanel.Enabled = false;
         }
         public void UnlockAll()
@@ -371,6 +458,9 @@ namespace duckHuntROP
             if (CurrentGun != null && CurrentGun.CanShoot())
             {
                 PictureBox pb = (sender as PictureBox);
+                if(PlaySound) { 
+                sp.Play();
+                }
                 CurrentGun.Shoot();
                 Recoil();
                 ChangeBullets(false);
@@ -426,21 +516,54 @@ namespace duckHuntROP
         }
         private void Form_KeyDown(object sender,KeyEventArgs e)
         {
-            if(e.KeyData == Keys.R && FlyZone.Visible)
+
+            if (kListening)
             {
-                CurrentGun.Reload(); 
-                if (CurrentGun.CurrentAmmo != CurrentGun.MaxAmmo)
+                kListening = false;
+                foreach(object ob in OptionsPanel.Controls)
                 {
-                    ChangeBullets(true);
-                } //if je pojisteni pred moznym bugem kdy uzivatel klikne R pred tim nez dobehne v CurrentGun.Shoot delayROF
-            }
-            if(e.KeyData == Keys.Escape)
+                    if(ob is PictureBox)
+                    {
+                        PictureBox pb = (PictureBox)ob;
+                        if(pb.Tag.ToString() == "1")
+                        {
+                            pb.Tag = "0";
+                            MessageBox.Show("Tady ->" + e.KeyData.ToString());
+                            switch(pb.Name)
+                            {
+                                case "Reload":
+                                    kReload = e.KeyData;
+                                    break;
+                                case "End":
+                                    kEnd = e.KeyData;
+                                    break;
+                                case "Back":
+                                    kBack = e.KeyData;
+                                    break;
+                            }
+                        }
+                    }
+                }
+                
+            } 
+            else 
             {
-                Application.Exit();
-            }
-            if(e.KeyData == Keys.Left)
-            {
-                End(false);
+                if (e.KeyData == kReload && FlyZone.Visible)
+                {
+                    CurrentGun.Reload(); 
+                    if (CurrentGun.CurrentAmmo != CurrentGun.MaxAmmo)
+                    {
+                        ChangeBullets(true);
+                    } //if je pojisteni pred moznym bugem kdy uzivatel klikne R pred tim nez dobehne v CurrentGun.Shoot delayROF
+                }
+                if(e.KeyData == kEnd)
+                {
+                    Application.Exit();
+                }
+                if(e.KeyData == kBack)
+                {
+                    End(false);
+                }
             }
         }
         private void Shop_Click(object sender, EventArgs e)
@@ -496,9 +619,20 @@ namespace duckHuntROP
                     {
                         await Task.Run(() => Task.Delay(CurrentGun.DelayReload / CurrentGun.MaxAmmo));
                         (s as Panel).BackColor = Color.DarkGoldenrod;
+                        if (PlaySound)
+                        {
+                            sp1.Play();
+                        }
                     }
+
                 }
-            } else
+
+                if (PlaySound)
+                {
+                    sp2.Play();
+                }
+            }
+            else
             {
                 for(int i = BulletZone.Controls.Count - 1; i >= 0; i--)
                 {
