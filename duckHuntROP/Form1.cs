@@ -246,7 +246,7 @@ namespace duckHuntROP
             HurtLevels.Add(Properties.Resources.Hurt2);
             HurtLevels.Add(Properties.Resources.Hurt3);
 
-            LockedGuns.Add(Properties.Resources.gun1Selected); //error prvni zbran nemuze byt lockla
+            LockedGuns.Add(Properties.Resources.gun1Selected); 
             LockedGuns.Add(Properties.Resources.gun4Locked);
             LockedGuns.Add(Properties.Resources.gun6Locked);
 
@@ -525,6 +525,7 @@ namespace duckHuntROP
                     if(ob is PictureBox)
                     {
                         PictureBox pb = (PictureBox)ob;
+                        if(pb.Tag != null) { 
                         if(pb.Tag.ToString() == "1")
                         {
                             pb.Tag = "0";
@@ -532,15 +533,21 @@ namespace duckHuntROP
                             switch(pb.Name)
                             {
                                 case "Reload":
+                                        MessageBox.Show("Reload zmenen");
                                     kReload = e.KeyData;
                                     break;
                                 case "End":
-                                    kEnd = e.KeyData;
+                                        MessageBox.Show("ukonceni hry zmeneno");
+
+                                        kEnd = e.KeyData;
                                     break;
                                 case "Back":
-                                    kBack = e.KeyData;
+                                        MessageBox.Show("vraceni na menu zmeneno");
+
+                                        kBack = e.KeyData;
                                     break;
                             }
+                        }
                         }
                     }
                 }

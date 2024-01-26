@@ -40,7 +40,7 @@ namespace duckHuntROP
         }
         public async Task Reload()
         {
-            if (!Reloading)
+            if (!Reloading && CurrentAmmo != MaxAmmo)
             {
                 Reloading = true;
 
