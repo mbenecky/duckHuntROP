@@ -20,6 +20,12 @@ namespace duckHuntROP
         public Form1()
         {
             InitializeComponent();
+            this.Size = Screen.PrimaryScreen.Bounds.Size;
+        }
+        public Form1(int resX, int resY)
+        {
+            InitializeComponent();
+            this.Size = new Size(resX, resY);
         }
         protected override CreateParams CreateParams
         {
@@ -96,8 +102,6 @@ namespace duckHuntROP
         private void Form1_Load(object sender, EventArgs e)
         {
             this.BackgroundImage = Properties.Resources.bckImageNight;
-            this.Size = Screen.PrimaryScreen.Bounds.Size;
-
             this.KeyDown += new KeyEventHandler(Form_KeyDown);
 
             Width = this.Size.Width;
@@ -585,8 +589,6 @@ namespace duckHuntROP
         }
         private void Gun_Buy(object sender,EventArgs e)
         {
-
-
             //Gun list -> gun1, gun4, gun6;
             Gun gun = AllGuns[Convert.ToInt32((sender as PictureBox).Tag)];
             if (!UnlockedGuns.Contains(gun))
