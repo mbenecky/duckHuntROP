@@ -15,26 +15,27 @@ namespace duckHuntROP
         private int Level;
         private Gun CurrentGun;
         private List<Gun> UnlockedGuns;
+        private List<Gun> AllGuns = Gun.CreateGuns();
         private Keys kReload;
         private Keys kEnd;
         private Keys kBack;
-        public Game()
+        public Game() { }
+        public Game(bool baseVal)
         {
-            Name = "default";
-            Coins = 50;
-            Level = 1;
-            CurrentGun = Gun.CreateGuns()[0];
-            UnlockedGuns = new List<Gun>();
-            UnlockedGuns.Add(CurrentGun);
-            kReload = Keys.R;
-            kEnd = Keys.Escape;
-            kBack = Keys.Left;
+            if (baseVal)
+            {
+                Name = "default";
+                Coins = 50;
+                Level = 1;
+                CurrentGun = Gun.CreateGuns()[0];
+                UnlockedGuns = new List<Gun>();
+                UnlockedGuns.Add(CurrentGun);
+                kReload = Keys.R;
+                kEnd = Keys.Escape;
+                kBack = Keys.Left;
+            }
         }
-        public Game(string gameString)
-        {
-
-        }
-        public void Load(ref string Name, ref int Coins, ref int Level, ref List<Gun> AllGuns,ref Gun CurrentGun, ref List<Gun> UnlockedGuns, ref Keys kReload, ref Keys kEnd, ref Keys kBack)
+        public void Load(out string Name, out int Coins, out int Level, out List<Gun> AllGuns, out Gun CurrentGun, out List<Gun> UnlockedGuns, out Keys kReload, out Keys kEnd, out Keys kBack)
         {
             Name = this.Name;
             Coins = this.Coins;
@@ -43,32 +44,98 @@ namespace duckHuntROP
             UnlockedGuns = this.UnlockedGuns;
             AllGuns = Gun.CreateGuns();
             kReload = this.kReload;
-            kBack = this.kBack;
             kEnd = this.kEnd;
+            kBack = this.kBack;
         }
+        //Hru -> neobsahuje nic -> LoadGame("save.txt", "jmeno");
+        //Z hry se to musí dostat do Form1.cs tudíž funkcí Load();
+        //Tímhle můžu mít zaráz více her načtených
+        
         public void LoadGame(string path, string nameID)
         {
+            string gamePath = "error;0;1;0;0;r;esc;left";
             try
             {
                 using (StreamReader sr = new StreamReader(path))
                 {
-                   Game game = new Game(sr.ReadToEnd().Split('\n'));
+                    string[] splitPath = path.Split('\n');
+                    foreach (string a in splitPath)
+                    {
+                        if (a.StartsWith(nameID))
+                        {
+                            gamePath = a;
+                            break;
+                        }
+                    }
                 }
+                //Každá hodnota uložena v tomhle formátu, jestli jinak, tak se neznám
+                //name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
+                string[] values = gamePath.Split(';');
+                this.Name = values[0];
+                this.Coins = Convert.ToInt32(values[1]);
+                this.Level = Convert.ToInt32(values[2]);
+                this.CurrentGun = AllGuns[Convert.ToInt32(values[3])];
+                string[] unlockedGuns = values[4].Split('|');
+                List<Gun> gunList = new List<Gun>();
+                foreach (string a in unlockedGuns)
+                {
+                    //[0][1][2]
+                    gunList.Add(AllGuns[Convert.ToInt32(a)]);
+                }
+                this.kReload = ToKeys(values[5]);
+                this.kEnd = ToKeys(values[6]);
+                this.kBack = ToKeys(values[7]);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
-                return; 
+                return;
             }
         }
-        public void SaveGame(string path)
+        public void SaveGame(string path, string nameID)
         {
+            try
+            {
+                string[] lines = File.ReadAllLines(path);
+                bool found = false;
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (lines[i].StartsWith(nameID))
+                    {
+                        lines[i] = GenerateSaveData(nameID);
+                        found = true;
+                        break;
+                    }
+                }
 
+                if (!found)
+                {
+                    string newData = GenerateSaveData(nameID);
+                    Array.Resize(ref lines, lines.Length + 1);
+                    lines[lines.Length - 1] = newData;
+                }
+
+                File.WriteAllLines(path, lines);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                return;
+            }
+        }
+
+        private string GenerateSaveData(string nameID)
+        {
+            // Uložení v tomto formátu: name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
+            string saveData = $"{nameID};{this.Coins};{this.Level};{this.AllGuns.IndexOf(this.CurrentGun)};";
+            saveData += string.Join("|", UnlockedGuns.Select(gun => AllGuns.IndexOf(gun)));
+            saveData += $";{FromKeys(kReload)};{FromKeys(kEnd)};{FromKeys(kBack)}";
+            return saveData;
         }
         public Keys ToKeys(string key)
         {
             key = key.ToLower();
-            switch(key)
+            switch (key)
             {
                 case "a": return Keys.A;
                 case "b": return Keys.B;
