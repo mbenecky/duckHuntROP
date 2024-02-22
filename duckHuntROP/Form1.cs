@@ -113,19 +113,19 @@ namespace duckHuntROP
             MenuPanel = new Panel();
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
             MenuPanel.Location = new Point(0, Height / 11);
-            MenuPanel.BackColor = Color.Red;
+            MenuPanel.BackColor = Color.Transparent;
             MenuPanel.Hide();
 
             StartPanel = new Panel();
             StartPanel.Size = new Size(Width / 2, Height - Height / 4);
             StartPanel.Location = MenuPanel.Location;
-            StartPanel.BackColor = Color.Blue;
+            StartPanel.BackColor = Color.Transparent;
             StartPanel.Show();
 
             OptionsPanel = new Panel();
             OptionsPanel.Size = new Size(Width / 2 - Width / 6, Height - Height / 4);
             OptionsPanel.Location = new Point(Width / 6, 0);
-            OptionsPanel.BackColor = Color.Green;
+            OptionsPanel.BackColor = Color.Transparent;
             OptionsPanel.Hide();
 
             PlayPB = new PictureBox();
@@ -147,7 +147,7 @@ namespace duckHuntROP
             BackPB = new PictureBox();
             BackPB.Size = new Size(Width / 10, Height / 20);
             BackPB.Location = new Point(Width / 32, Height / 40);
-            BackPB.BackgroundImage = Properties.Resources.unknown;
+            BackPB.BackgroundImage = Properties.Resources.backButton;
             BackPB.BackgroundImageLayout = ImageLayout.Stretch;
             BackPB.BackColor = Color.Transparent;
             BackPB.Click+= new EventHandler(Back_Click);
@@ -155,7 +155,7 @@ namespace duckHuntROP
             NewGamePB = new PictureBox();
             NewGamePB.Size = new Size(Width / 10, Height / 10);
             NewGamePB.Location = PlayPB.Location;
-            NewGamePB.BackgroundImage = Properties.Resources.unknown;
+            NewGamePB.BackgroundImage = Properties.Resources.newButton;
             NewGamePB.BackgroundImageLayout = ImageLayout.Stretch;
             NewGamePB.BackColor = Color.Transparent;
             NewGamePB.Click += new EventHandler(NewGame_Click);
@@ -163,7 +163,7 @@ namespace duckHuntROP
             OptionsPB = new PictureBox();
             OptionsPB.Size = NewGamePB.Size;
             OptionsPB.Location = ShopPB.Location;
-            OptionsPB.BackgroundImage = Properties.Resources.unknown;
+            OptionsPB.BackgroundImage = Properties.Resources.optionsButton;
             OptionsPB.BackgroundImageLayout = ImageLayout.Stretch;
             OptionsPB.BackColor = Color.Transparent;
             OptionsPB.Click += new EventHandler(Options_Click);
@@ -172,7 +172,10 @@ namespace duckHuntROP
             kReloadPB.Size = new Size(Width / 16, Width / 16);
             kReloadPB.Location = new Point(Width / 16, Height / 16);
             kReloadPB.Name = "Reload";
-            kReloadPB.BackgroundImage = Properties.Resources.unknown;
+            kReloadPB.Image = Properties.Resources.rKey;
+            kReloadPB.SizeMode =PictureBoxSizeMode.StretchImage;
+            kReloadPB.BackgroundImage = Properties.Resources.reloadKey;
+            kReloadPB.BackgroundImageLayout = ImageLayout.Stretch;
             kReloadPB.Tag = "0";
             kReloadPB.Click += new EventHandler(Global_Click);
 
@@ -180,7 +183,10 @@ namespace duckHuntROP
             kEndPB.Size = kReloadPB.Size;
             kEndPB.Location = new Point(Width / 16, Height / 16 + kEndPB.Size.Height);
             kEndPB.Name = "End";
-            kEndPB.BackgroundImage = Properties.Resources.unknown;
+            kEndPB.Image = Properties.Resources.escapeKey;
+            kEndPB.SizeMode =PictureBoxSizeMode.StretchImage;
+            kEndPB.BackgroundImage = Properties.Resources.endKey;
+            kEndPB.BackgroundImageLayout = ImageLayout.Stretch;
             kEndPB.Tag = "0";
             kEndPB.Click += new EventHandler(Global_Click);
 
@@ -188,14 +194,18 @@ namespace duckHuntROP
             kBackPB.Size = kReloadPB.Size;
             kBackPB.Location = new Point(Width / 16, Height / 16 + kBackPB.Size.Height * 2);
             kBackPB.Name = "Back";
-            kBackPB.BackgroundImage = Properties.Resources.unknown;
+            kBackPB.Image = Properties.Resources.leftKey;
+            kBackPB.SizeMode = PictureBoxSizeMode.StretchImage;
+            kBackPB.BackgroundImage = Properties.Resources.backKey;
+            kBackPB.BackgroundImageLayout = ImageLayout.Stretch;
             kBackPB.Tag = "0";
             kBackPB.Click += new EventHandler(Global_Click);
 
             SoundPB = new PictureBox();
             SoundPB.Size = new Size(Width / 8, Height/16);
-            SoundPB.Location = new Point(Width / 16, Height / 4);
-            SoundPB.BackgroundImage = Properties.Resources.unknown;
+            SoundPB.Location = new Point(Width / 8, Height / 16);
+            SoundPB.BackgroundImageLayout = ImageLayout.Stretch;
+            SoundPB.BackgroundImage = Properties.Resources.soundOnButton;
             SoundPB.Click += new EventHandler(Sound_Click);
 
             MenuPanel.Controls.Add(BackPB);
@@ -221,7 +231,7 @@ namespace duckHuntROP
             ShopPanel = new Panel();
             ShopPanel.Size = new Size(Width-Width/6, Height - Height / 4);
             ShopPanel.Location = new Point(Width/6, Height / 11);
-            ShopPanel.BackColor = Color.Red;
+            ShopPanel.BackColor = Color.Transparent;
             ShopPanel.Hide();
 
             EndZone = new Panel();
@@ -331,19 +341,141 @@ namespace duckHuntROP
         }
         private void Global_Click(object sender, EventArgs e)
         {
+            LockAll();
+            foreach(Control c in OptionsPanel.Controls)
+            {
+                if(c is PictureBox)
+                {
+                    if((c as PictureBox).Tag != null)
+                    {
+                        (c as PictureBox).Tag = "0";
+                    }
+                }
+            }
+            
             kListening = true;
             (sender as PictureBox).Tag = "1";
-            MessageBox.Show("Listening");
         }
         private void Sound_Click(object sender, EventArgs e)
         {
             PlaySound = !PlaySound;
-            //zmena pb
+            if(PlaySound)
+            {
+                (sender as PictureBox).BackgroundImage = Properties.Resources.soundOnButton;
+            } else
+            {
+                (sender as PictureBox).BackgroundImage = Properties.Resources.soundOffButton;
+
+            }
         }
         private void Options_Click(object sender, EventArgs e)
         {
             OptionsPanel.Visible = !OptionsPanel.Visible;
         }
+
+        private void ToKeyImage(PictureBox sender, Keys key)
+        {
+            switch (key)
+            {
+                case Keys.A:
+                    sender.Image = Properties.Resources.aKey;
+                    break;
+                case Keys.B:
+                    sender.Image = Properties.Resources.bKey;
+                    break;
+                case Keys.C:
+                    sender.Image = Properties.Resources.cKey;
+                    break;
+                case Keys.D:
+                    sender.Image = Properties.Resources.dKey;
+                    break;
+                case Keys.E:
+                    sender.Image = Properties.Resources.eKey;
+                    break;
+                case Keys.F:
+                    sender.Image = Properties.Resources.fKey;
+                    break;
+                case Keys.G:
+                    sender.Image = Properties.Resources.gKey;
+                    break;
+                case Keys.H:
+                    sender.Image = Properties.Resources.hKey;
+                    break;
+                case Keys.I:
+                    sender.Image = Properties.Resources.iKey;
+                    break;
+                case Keys.J:
+                    sender.Image = Properties.Resources.jKey;
+                    break;
+                case Keys.K:
+                    sender.Image = Properties.Resources.kKey;
+                    break;
+                case Keys.L:
+                    sender.Image = Properties.Resources.lKey;
+                    break;
+                case Keys.M:
+                    sender.Image = Properties.Resources.mKey;
+                    break;
+                case Keys.N:
+                    sender.Image = Properties.Resources.nKey;
+                    break;
+                case Keys.O:
+                    sender.Image = Properties.Resources.oKey;
+                    break;
+                case Keys.P:
+                    sender.Image = Properties.Resources.pKey;
+                    break;
+                case Keys.Q:
+                    sender.Image = Properties.Resources.qKey;
+                    break;
+                case Keys.R:
+                    sender.Image = Properties.Resources.rKey;
+                    break;
+                case Keys.S:
+                    sender.Image = Properties.Resources.sKey;
+                    break;
+                case Keys.T:
+                    sender.Image = Properties.Resources.tKey;
+                    break;
+                case Keys.U:
+                    sender.Image = Properties.Resources.uKey;
+                    break;
+                case Keys.V:
+                    sender.Image = Properties.Resources.vKey;
+                    break;
+                case Keys.W:
+                    sender.Image = Properties.Resources.wKey;
+                    break;
+                case Keys.X:
+                    sender.Image = Properties.Resources.xKey;
+                    break;
+                case Keys.Y:
+                    sender.Image = Properties.Resources.yKey;
+                    break;
+                case Keys.Z:
+                    sender.Image = Properties.Resources.zKey;
+                    break;
+                case Keys.Escape:
+                    sender.Image = Properties.Resources.escapeKey;
+                    break;
+                case Keys.Left:
+                    sender.Image = Properties.Resources.leftKey;
+                    break;
+                case Keys.Right:
+                    sender.Image = Properties.Resources.rightKey;
+                    break;
+                case Keys.Up:
+                    sender.Image = Properties.Resources.upKey;
+                    break;
+                case Keys.Down:
+                    sender.Image = Properties.Resources.downKey;
+                    break;
+                default:
+                    sender.Image = null;
+                    break;
+            }
+        }
+
         private void Hunt_Click(object sender, EventArgs e)
         {
             FlyZone.Show();
@@ -427,10 +559,12 @@ namespace duckHuntROP
         public void LockAll()
         {
             MenuPanel.Enabled = false;
+            StartPanel.Enabled = false;
         }
         public void UnlockAll()
         {
             MenuPanel.Enabled = true;
+            StartPanel.Enabled = true;
         }
         public void Recoil()
         {
@@ -529,25 +663,21 @@ namespace duckHuntROP
                     if(ob is PictureBox)
                     {
                         PictureBox pb = (PictureBox)ob;
-                        if(pb.Tag != null) { 
-                        if(pb.Tag.ToString() == "1")
-                        {
-                            pb.Tag = "0";
-                            MessageBox.Show("Tady ->" + e.KeyData.ToString());
+                        if(pb.Tag != null) {
+                            if (pb.Tag.ToString() == "1")
+                            {
+                                pb.Tag = "0";
+                                ToKeyImage(pb, e.KeyData);
+                                UnlockAll();
                             switch(pb.Name)
                             {
                                 case "Reload":
-                                        MessageBox.Show("Reload zmenen");
                                     kReload = e.KeyData;
                                     break;
                                 case "End":
-                                        MessageBox.Show("ukonceni hry zmeneno");
-
                                         kEnd = e.KeyData;
                                     break;
                                 case "Back":
-                                        MessageBox.Show("vraceni na menu zmeneno");
-
                                         kBack = e.KeyData;
                                     break;
                             }
@@ -571,7 +701,7 @@ namespace duckHuntROP
                 {
                     Application.Exit();
                 }
-                if(e.KeyData == kBack)
+                if(e.KeyData == kBack && FlyZone.Visible)
                 {
                     End(false);
                 }

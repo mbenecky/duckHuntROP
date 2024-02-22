@@ -118,11 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="aKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\aKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="backButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="backgroundKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backgroundKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="backKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\backKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bckImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bckImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="bckImageNight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bckImageNight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="downKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\downKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="duck1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\duck1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,8 +163,23 @@
   <data name="duckTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\duckTemplate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="eKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="endKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\endKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="endScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\endScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="escapeKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\escapeKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gun1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gun1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,6 +208,9 @@
   <data name="gunshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gunshot.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="hKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="huntButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\huntButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -181,8 +223,44 @@
   <data name="Hurt3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Hurt3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="iKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="jKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\jKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="kKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\kKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="leftKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\leftKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="newButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\newButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="okButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\okButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="oKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\oKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="optionsButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\optionsButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="qKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\qKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="reload1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\reload1.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -190,10 +268,52 @@
   <data name="reload2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\reload2.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="reloadKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\reloadKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rightKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rightKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="shopButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shopButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="sKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="soundOffButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\soundOffButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="soundOnButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\soundOnButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\uKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="unknown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\unknown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="upKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\upKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\yKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

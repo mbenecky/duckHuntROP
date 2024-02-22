@@ -161,5 +161,125 @@
   <ItemGroup>
     <None Include="Resources\gunshot.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\optionsButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backgroundKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\soundOnButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\soundOffButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reloadKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\endKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\aKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\qKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\uKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\upKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\downKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftKey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\escapeKey.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
