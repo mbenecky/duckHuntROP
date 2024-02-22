@@ -281,5 +281,17 @@
   <ItemGroup>
     <None Include="Resources\escapeKey.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loadButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sizeButton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

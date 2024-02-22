@@ -462,6 +462,16 @@ namespace duckHuntROP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap loadButton {
+            get {
+                object obj = ResourceManager.GetObject("loadButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mKey {
             get {
                 object obj = ResourceManager.GetObject("mKey", resourceCulture);
@@ -532,6 +542,16 @@ namespace duckHuntROP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap playButton {
+            get {
+                object obj = ResourceManager.GetObject("playButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap qKey {
             get {
                 object obj = ResourceManager.GetObject("qKey", resourceCulture);
@@ -590,9 +610,29 @@ namespace duckHuntROP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap saveButton {
+            get {
+                object obj = ResourceManager.GetObject("saveButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap shopButton {
             get {
                 object obj = ResourceManager.GetObject("shopButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sizeButton {
+            get {
+                object obj = ResourceManager.GetObject("sizeButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

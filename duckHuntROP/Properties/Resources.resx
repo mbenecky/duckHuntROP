@@ -238,6 +238,9 @@
   <data name="lKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="loadButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\loadButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="mKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -259,6 +262,9 @@
   <data name="pKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="playButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\playButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="qKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\qKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -277,8 +283,14 @@
   <data name="rKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="saveButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\saveButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="shopButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shopButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sizeButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sizeButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="sKey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sKey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
