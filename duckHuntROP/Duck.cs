@@ -42,7 +42,7 @@ namespace duckHuntROP
                 this.IsBoss = true;
             }
         }
-        public static List<Duck>  CreateDucks(int Level)
+        public static List<Duck> CreateDucks(int Level)
         {
             Random rnd = new Random();
             List<Duck> list = new List<Duck>();

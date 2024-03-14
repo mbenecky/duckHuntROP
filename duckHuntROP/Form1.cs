@@ -44,6 +44,7 @@ namespace duckHuntROP
         private Panel MenuPanel;
         private Panel StartPanel;
         private Panel OptionsPanel;
+        private Panel ScorePanel;
 
 
         private Timer FlyTimer;
@@ -58,6 +59,7 @@ namespace duckHuntROP
         private PictureBox LoadPB;
         private PictureBox SavePB;
         private PictureBox ApplyPB;
+        private PictureBox ScorePB;
 
         //pictureboxes fungujici jako buttony
 
@@ -135,8 +137,14 @@ namespace duckHuntROP
             OptionsPanel = new Panel();
             OptionsPanel.Size = new Size(Width / 2 - Width / 6, Height - Height / 4);
             OptionsPanel.Location = new Point(Width / 6, 0);
-            OptionsPanel.BackColor = Color.Transparent;
+            OptionsPanel.BackColor = Color.Red;
             OptionsPanel.Hide();
+
+            ScorePanel = new Panel();
+            ScorePanel.Size = new Size(Width / 2 - Width / 6, Height - Height / 4);
+            ScorePanel.Location = new Point(Width / 6, 0);
+            ScorePanel.BackColor = Color.Red;
+            ScorePanel.Hide();
 
             PlayPB = new PictureBox();
             PlayPB.Size = new Size(Width / 10, Height / 10);
@@ -186,6 +194,14 @@ namespace duckHuntROP
             OptionsPB.BackgroundImageLayout = ImageLayout.Stretch;
             OptionsPB.BackColor = Color.Transparent;
             OptionsPB.Click += new EventHandler(Options_Click);
+
+            ScorePB = new PictureBox();
+            ScorePB.Size = NewGamePB.Size;
+            ScorePB.Location = new Point(Width / 32, Height / 12 + Height / 4);
+            ScorePB.BackgroundImage = Properties.Resources.score;
+            ScorePB.BackgroundImageLayout = ImageLayout.Stretch;
+            ScorePB.BackColor = Color.Transparent;
+            ScorePB.Click +=new EventHandler(Score_Click);
 
             kReloadPB = new PictureBox();
             kReloadPB.Size = new Size(Width / 16, Width / 16);
@@ -270,21 +286,25 @@ namespace duckHuntROP
             StartPanel.Controls.Add(OptionsPB);
             StartPanel.Controls.Add(OptionsPanel);
             StartPanel.Controls.Add(ContinuePB);
-
+            StartPanel.Controls.Add(ScorePB);
+            
             OptionsPanel.Controls.Add(kReloadPB);
             OptionsPanel.Controls.Add(kEndPB);
             OptionsPanel.Controls.Add(kBackPB);
             OptionsPanel.Controls.Add(SoundPB);
-            OptionsPanel.Controls.Add(SavePB);
-            OptionsPanel.Controls.Add(LoadPB);
-            OptionsPanel.Controls.Add(LoadNameTB);
             OptionsPanel.Controls.Add(SizePickerCB);
             OptionsPanel.Controls.Add(ApplyPB);
+
+            ScorePanel.Controls.Add(SavePB);
+            ScorePanel.Controls.Add(LoadPB);
+            ScorePanel.Controls.Add(LoadNameTB);
 
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
             FlyZone.Location = new Point(0, Height / 11);
             FlyZone.BackColor = Color.Transparent;
+
+            FlyZone.Click += new EventHandler(FlyZone_Click);
             FlyZone.Hide();
 
             ShopPanel = new Panel();
@@ -296,7 +316,8 @@ namespace duckHuntROP
             EndZone = new Panel();
             EndZone.Size = new Size(Width / 32, FlyZone.Height);
             EndZone.Location = new Point(FlyZone.Width - FlyZone.Width / 32, 0);
-            EndZone.BackColor = Color.Transparent;
+            EndZone.BackColor = Color.Red;
+            
             FlyZone.Controls.Add(EndZone);
 
             FlyTimer = new Timer();
@@ -313,7 +334,8 @@ namespace duckHuntROP
             Controls.Add(FlyZone);
             Controls.Add(BulletZone);
             Controls.Add(MenuPanel);
-            Controls.Add(StartPanel);  
+            Controls.Add(StartPanel);
+            Controls.Add(ScorePanel);
 
             HurtLevels.Add(Properties.Resources.Hurt1);
             HurtLevels.Add(Properties.Resources.Hurt2);
@@ -393,12 +415,19 @@ namespace duckHuntROP
                 this.Focus();
             }
         }
+        private void Score_Click(object sender, EventArgs e)
+        {
+            ScorePanel.Visible = !ScorePanel.Visible;
+            OptionsPanel.Visible = false;
+            ScorePanel.BringToFront();
+        }
         private void NewGame_Click(object sender, EventArgs e)
         {
 
             CurrentGame = new Game(true);
             CurrentGame.Load(out Name, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
             StartPanel.Hide();
+            ScorePanel.Hide();
             MenuPanel.Show();
             ContinuePB.Show();
             int i = 0;
@@ -490,6 +519,8 @@ namespace duckHuntROP
         private void Options_Click(object sender, EventArgs e)
         {
             OptionsPanel.Visible = !OptionsPanel.Visible;
+            OptionsPanel.BringToFront();
+            ScorePanel.Visible = false;
         }
 
         private void ToKeyImage(PictureBox sender, Keys key)
@@ -769,6 +800,19 @@ namespace duckHuntROP
                 Bullet.Location = new Point(Convert.ToInt32((BulletZone.Width/10*i+BulletZone.Width/20)*multiplier),0);
                 Bullet.BackColor = Color.DarkGoldenrod;
                 BulletZone.Controls.Add(Bullet);
+            }
+        }
+        private async void FlyZone_Click(object sender, EventArgs e)
+        {
+            if (CurrentGun != null && CurrentGun.CanShoot())
+            {
+                if (PlaySound)
+                {
+                    sp.Play();
+                }
+                CurrentGun.Shoot();
+                Recoil();
+                ChangeBullets(false);
             }
         }
         private void Form_KeyDown(object sender,KeyEventArgs e)
