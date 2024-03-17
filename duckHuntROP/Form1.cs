@@ -46,6 +46,7 @@ namespace duckHuntROP
         private Panel OptionsPanel;
         private Panel ScorePanel;
 
+        private ScoreTable st;
 
         private Timer FlyTimer;
         
@@ -69,6 +70,8 @@ namespace duckHuntROP
         private PictureBox kReloadPB;
         private PictureBox kEndPB;
         private PictureBox kBackPB;
+
+        
 
         private Keys kReload;
         private Keys kEnd;
@@ -116,17 +119,20 @@ namespace duckHuntROP
         {
             this.BackgroundImage = Properties.Resources.bckImageNight;
             this.KeyDown += new KeyEventHandler(Form_KeyDown);
+            this.LostFocus += new EventHandler(FocusLost);
 
             Width = this.Size.Width;
             Height = this.Size.Height;
 
-
+            
             CurrentGame = new Game(true);
             MenuPanel = new Panel();
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
             MenuPanel.Location = new Point(0, Height / 11);
             MenuPanel.BackColor = Color.Transparent;
             MenuPanel.Hide();
+
+            st = new ScoreTable(this.Size);
 
             StartPanel = new Panel();
             StartPanel.Size = new Size(Width / 2, Height - Height / 4);
@@ -243,19 +249,19 @@ namespace duckHuntROP
             SoundPB.BackgroundImage = Properties.Resources.soundOnButton;
             SoundPB.Click += new EventHandler(Sound_Click);
 
-            SavePB = new PictureBox();
-            SavePB.Size = new Size(Width / 12, Height / 12);
-            SavePB.Location = new Point(Width / 8, Height / 8);
-            SavePB.BackgroundImage = Properties.Resources.saveButton;
-            SavePB.BackgroundImageLayout = ImageLayout.Stretch;
-            SavePB.Click += new EventHandler(Save_Click);
+            //SavePB = new PictureBox();
+            //SavePB.Size = new Size(Width / 12, Height / 12);
+            //SavePB.Location = new Point(Width / 8, Height / 8);
+            //SavePB.BackgroundImage = Properties.Resources.saveButton;
+            //SavePB.BackgroundImageLayout = ImageLayout.Stretch;
+            //SavePB.Click += new EventHandler(Save_Click);
 
-            LoadPB = new PictureBox();
-            LoadPB.Size = new Size(Width / 12, Height / 12);
-            LoadPB.Location = new Point(Width / 8, Height / 8 + Height / 10);
-            LoadPB.BackgroundImage = Properties.Resources.loadButton;
-            LoadPB.BackgroundImageLayout = ImageLayout.Stretch;
-            LoadPB.Click += new EventHandler(Load_Click);
+            //LoadPB = new PictureBox();
+            //LoadPB.Size = new Size(Width / 12, Height / 12);
+            //LoadPB.Location = new Point(Width / 8, Height / 8 + Height / 10);
+            //LoadPB.BackgroundImage = Properties.Resources.loadButton;
+            //LoadPB.BackgroundImageLayout = ImageLayout.Stretch;
+            //LoadPB.Click += new EventHandler(Load_Click);
 
             ApplyPB = new PictureBox();
             ApplyPB.Size = new Size(Width / 24, Height / 24);
@@ -263,11 +269,11 @@ namespace duckHuntROP
             ApplyPB.BackgroundImage = Properties.Resources.sizeButton;
             ApplyPB.Click += new EventHandler(Size_Click);
 
-            LoadNameTB = new TextBox();
-            LoadNameTB.Size = new Size(Width / 12, Height / 24);
-            LoadNameTB.Location = new Point(Width / 8, Height / 8 + Height / 5);
-            LoadNameTB.Text = "Jmeno";
-            LoadNameTB.TabStop = false;
+            //LoadNameTB = new TextBox();
+            //LoadNameTB.Size = new Size(Width / 12, Height / 24);
+            //LoadNameTB.Location = new Point(Width / 8, Height / 8 + Height / 5);
+            //LoadNameTB.Text = "Jmeno";
+            //LoadNameTB.TabStop = false;
 
             SizePickerCB = new ComboBox();
             SizePickerCB.Items.Add("640x360");
@@ -295,9 +301,11 @@ namespace duckHuntROP
             OptionsPanel.Controls.Add(SizePickerCB);
             OptionsPanel.Controls.Add(ApplyPB);
 
-            ScorePanel.Controls.Add(SavePB);
-            ScorePanel.Controls.Add(LoadPB);
-            ScorePanel.Controls.Add(LoadNameTB);
+            //ScorePanel.Controls.Add(SavePB);
+            //ScorePanel.Controls.Add(LoadPB);
+            //ScorePanel.Controls.Add(LoadNameTB);
+
+            ScorePanel.Controls.Add(st);
 
             FlyZone = new Panel();
             FlyZone.Size = new Size(Width, Height - Height / 4);
@@ -306,7 +314,7 @@ namespace duckHuntROP
 
             FlyZone.Click += new EventHandler(FlyZone_Click);
             FlyZone.Hide();
-
+            
             ShopPanel = new Panel();
             ShopPanel.Size = new Size(Width-Width/6, Height - Height / 4);
             ShopPanel.Location = new Point(Width/6, Height / 11);
@@ -388,6 +396,12 @@ namespace duckHuntROP
                     pb.Location = new Point(Convert.ToInt32(pb.Name) + pb.Location.X, pb.Location.Y);
                 }
             }
+        }
+        private async void FocusLost(object sender, EventArgs e)
+        {
+            await Task.Delay(4000);
+            this.Focus();
+            MessageBox.Show("FocusGained");
         }
         private void Save_Click(object sender, EventArgs e)
         {
