@@ -398,7 +398,7 @@ namespace duckHuntROP
         }
         private async void FocusLost(object sender, EventArgs e)
         {
-            await Task.Delay(4000);
+            await Task.Delay(3000);
             this.Focus();
         }
         private void Save_Click(object sender, EventArgs e)
@@ -456,6 +456,7 @@ namespace duckHuntROP
             ScorePanel.Visible = !ScorePanel.Visible;
             OptionsPanel.Visible = false;
             ScorePanel.BringToFront();
+            st.UpdateListView();
         }
         private void NewGame_Click(object sender, EventArgs e)
         {
@@ -463,6 +464,7 @@ namespace duckHuntROP
             CurrentGame = new Game(true);
             CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
             StartPanel.Hide();
+            ScorePanel.Hide();
             ScorePanel.Hide();
             MenuPanel.Show();
             ContinuePB.Show();
@@ -483,6 +485,7 @@ namespace duckHuntROP
             StartPanel.Show();
             MenuPanel.Hide();
             ShopPanel.Hide();
+            ScorePanel.Hide();
         }
         private void Size_Click(object sender, EventArgs e)
         {
@@ -523,6 +526,7 @@ namespace duckHuntROP
             StartPanel.Hide();
             MenuPanel.Show();
             ShopPanel.Hide();
+            ScorePanel.Hide();
         }
         private void Global_Click(object sender, EventArgs e)
         {
@@ -670,6 +674,7 @@ namespace duckHuntROP
             BulletZone.Show();
             MenuPanel.Hide();
             ShopPanel.Hide();
+            ScorePanel.Hide();
             CoinsPerRound = 0;
             this.BackgroundImage = Properties.Resources.bckImage;
             SpawnDucks();
@@ -715,13 +720,13 @@ namespace duckHuntROP
             Label EndLabel = new Label();
             if (win)
             {
-                EndLabel.Text = "Dals to! :-)\n";
+                EndLabel.Text = "You did it! :-)\n";
             }
             else
             {
-                EndLabel.Text = "Mozna priste! :-(\n";
+                EndLabel.Text = "Maybe next time! :-(\n";
             }
-            EndLabel.Text += "Vydelal sis: " + CoinsPerRound + " korunek nyni mas " + Coins + " korunek";
+            EndLabel.Text += "You made: " + CoinsPerRound + " coins and you currently have " + Coins + " coins";
 
             EndLabel.MaximumSize = new Size(EndPanel.Width - EndPanel.Width / 16, EndPanel.Height - EndPanel.Height / 4);
             EndLabel.Location = new Point(EndPanel.Width / 32, EndPanel.Height / 8);
