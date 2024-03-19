@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,13 @@ namespace duckHuntROP
         public ScoreTable(Size FormSize)
         {
             InitializeComponent();
-            this.Size = new Size(FormSize.Width/2, FormSize.Height/2);
+            this.Size = new Size(FormSize.Width / 2, FormSize.Height / 2);
         }
-        private System.Windows.Forms.ListView ScoreListView;
+        public static System.Windows.Forms.ListView ScoreListView;
         private PictureBox NameSort;
         private PictureBox DuckSort;
         private PictureBox LevelSort;
+
         private void ScoreTable_Load(object sender, EventArgs e)
         {
             this.Location = new Point(0, 0);
@@ -40,15 +42,36 @@ namespace duckHuntROP
             ScoreListView.Columns.Add("Coins");
             ScoreListView.Columns.Add("Levels");
             ResizeColumns(ScoreListView);
-            string[] row1 = { "Ahoj", "Jak se Mas" };
-            ListViewItem item1 = new ListViewItem(row1);
-            ScoreListView.Items.Add(item1);
-
-            // Create second row
-            string[] row2 = { "Ahoj", "Mam se dobre" };
-            ListViewItem item2 = new ListViewItem(row2);
-            ScoreListView.Items.Add(item2);
+            //string[] row1 = { "Jmeno","50","1"};
+            //ListViewItem item1 = new ListViewItem(row1);
+            //ScoreListView.Items.Add(item1);
             this.Controls.Add(ScoreListView);
+
+        }
+        public void UpdateListView()
+        {
+            Game.Show("save.dat");
+            try
+            {
+                using (StreamReader sr = new StreamReader("save.txt"))
+                {
+                    
+                    string[] splitPath = File.ReadAllLines("save.txt");
+                    foreach (string a in splitPath)
+                    {
+                        string[] splitGameData = a.Split(';');
+                        string[] row = { splitGameData[0], splitGameData[1], splitGameData[2] };
+                        ListViewItem item = new ListViewItem(row);
+                        ScoreListView.Items.Add(item);
+                    }
+                }
+
+                Game.Hide("save.txt");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("UpdateListView went wrong " + ex.Message);
+            }
         }
         private void ResizeColumns(System.Windows.Forms.ListView listView)
         {

@@ -63,6 +63,28 @@ namespace duckHuntROP
             this.kEnd = kEnd;
             this.kBack = kBack;
         }
+        public static void Hide(string path)
+        {
+            try
+            {
+                File.Move(path, path.Split('.')[0] + ".dat");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hide went wrong" + ex.Message);
+            }
+        }
+        public static void Show(string path)
+        {
+            try
+            {
+                File.Move(path, path.Split('.')[0] + ".txt");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Show went wrong" + ex.Message);
+            }
+        }
         public void NewGame()
         {
             Name = "default";
@@ -78,21 +100,22 @@ namespace duckHuntROP
         public void LoadGame(string path, string nameID)
         {
             string gamePath = "error;0;1;0;0;r;esc;left";
+            bool found = true;
             try
             {
                 if (!File.Exists(path))
                 {
-                    using (File.Create(path)) 
-                    {
-                        File.WriteAllText(path, gamePath);
-                    }
+                    using (File.Create(path)) { }
+                    //vytvoreni saves.dat
                 }
+                Show(path);
+                path = path.Split('.')[0] + ".txt";
                 using (StreamReader sr = new StreamReader(path))
                 {
-                    if(!sr.ReadToEnd().Contains(nameID))
+                    if (!sr.ReadToEnd().Contains(nameID))
                     {
                         MessageBox.Show("Jmeno nenalezeno");
-                        return;
+                        found = false;
                     }
                     string[] splitPath = File.ReadAllLines(path);
                     foreach (string a in splitPath)
@@ -104,43 +127,55 @@ namespace duckHuntROP
                         }
                     }
                 }
-                //Každá hodnota uložena v tomhle formátu, jestli jinak, tak se neznám
-                //name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
-                string[] values = gamePath.Split(';');
-                MessageBox.Show(gamePath);
-                this.Name = values[0];
-                this.Coins = Convert.ToInt32(values[1]);
-                this.Level = Convert.ToInt32(values[2]);
-                this.CurrentGun = AllGuns[Convert.ToInt32(values[3])];
-                string[] unlockedGunsID = values[4].Split('|');
-                List<Gun> gunList = new List<Gun>();
-                foreach (string a in unlockedGunsID)
+                if (found)
                 {
-                    //[0][1][2]
-                    MessageBox.Show(a);
-                    gunList.Add(AllGuns[Convert.ToInt32(a)]);
+                    //Každá hodnota uložena v tomhle formátu, jestli jinak, tak se neznám
+                    //name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
+                    string[] values = gamePath.Split(';');
+                    MessageBox.Show(gamePath);
+                    this.Name = values[0];
+                    this.Coins = Convert.ToInt32(values[1]);
+                    this.Level = Convert.ToInt32(values[2]);
+                    this.CurrentGun = AllGuns[Convert.ToInt32(values[3])];
+                    string[] unlockedGunsID = values[4].Split('|');
+                    List<Gun> gunList = new List<Gun>();
+                    foreach (string a in unlockedGunsID)
+                    {
+                        //[0][1][2]
+                        MessageBox.Show(a);
+                        gunList.Add(AllGuns[Convert.ToInt32(a)]);
+                    }
+                    UnlockedGuns = gunList;
+                    this.kReload = ToKeys(values[5]);
+                    this.kEnd = ToKeys(values[6]);
+                    this.kBack = ToKeys(values[7]);
+                    MessageBox.Show("Uspesne Loadnuto");
                 }
-                UnlockedGuns = gunList;
-                this.kReload = ToKeys(values[5]);
-                this.kEnd = ToKeys(values[6]);
-                this.kBack = ToKeys(values[7]);
-                MessageBox.Show("Uspesne Loadnuto");
-
+                Hide(path);
+                return;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
-                return;
+                
             }
+            Hide(path);
         }
         public void SaveGame(string path, string nameID)
         {
+            path = path.Split('.')[0] + ".dat";
+            //saves.dat
             try
             {
                 if (!File.Exists(path))
                 {
                     using (File.Create(path)) { }
                 }
+                Show(path);
+                //path =saves.dat
+                //saves.txt
+                path = path.Split('.')[0] + ".txt";
+                //path = saves.txt
                 string[] lines = File.ReadAllLines(path);
                 bool found = false;
                 for (int i = 0; i < lines.Length; i++)
@@ -162,23 +197,26 @@ namespace duckHuntROP
 
                 File.WriteAllLines(path, lines);
                 MessageBox.Show("Uspesne Ulozeno");
+                Hide(path);
+                return;
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
-                return;
             }
+            Hide(path);
         }
 
         private string GenerateSaveData(string nameID)
         {
             //NA tenhle kod nesmis uz sahnout, jestli si myslis ze to nejak zahadne spravis aby to melo lepsi cas tak si to nemysli
             int CurrentGunIndex = 0;
-           // Uložení v tomto formátu: name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
-            for(int i = 0; i!= AllGuns.Count;i++)
+            // Uložení v tomto formátu: name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
+            for (int i = 0; i != AllGuns.Count; i++)
             {
                 if (AllGuns[i].ID == CurrentGun.ID)
-                {   
+                {
                     CurrentGunIndex = i;
                     break;
                 }
@@ -186,9 +224,9 @@ namespace duckHuntROP
             List<string> UnlockedGunsIndex = new List<string>();
             for (int i = 0; i != AllGuns.Count; i++)
             {
-                foreach(Gun g in UnlockedGuns)
+                foreach (Gun g in UnlockedGuns)
                 {
-                    if (AllGuns[i].ID ==g.ID)
+                    if (AllGuns[i].ID == g.ID)
                     {
                         UnlockedGunsIndex.Add(i.ToString());
                     }

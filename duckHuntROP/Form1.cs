@@ -49,12 +49,12 @@ namespace duckHuntROP
         private ScoreTable st;
 
         private Timer FlyTimer;
-        
+
         private PictureBox ShopPB;
         private PictureBox PlayPB;
         private PictureBox NewGamePB;
         private PictureBox BackPB;
-        private PictureBox ContinuePB;
+        public static PictureBox ContinuePB;
         private PictureBox OptionsPB;
         private PictureBox SoundPB;
         private PictureBox LoadPB;
@@ -71,35 +71,34 @@ namespace duckHuntROP
         private PictureBox kEndPB;
         private PictureBox kBackPB;
 
-        
 
-        private Keys kReload;
-        private Keys kEnd;
-        private Keys kBack;
+
+        public static Keys kReload;
+        public static Keys kEnd;
+        public static Keys kBack;
 
         private bool kListening = false;
         private bool PlaySound = true;
 
-        private Gun CurrentGun;
-        private List<Gun> AllGuns;
+        public static Gun CurrentGun;
+        public static List<Gun> AllGuns;
         private List<Image> HurtLevels = new List<Image>();
 
         private List<Image> LockedGuns = new List<Image>();
         private List<Image> SelectedGuns = new List<Image>();
 
-        public Game CurrentGame;
+        public static Game CurrentGame;
 
         SoundPlayer sp = new SoundPlayer(Properties.Resources.gunshot);
         SoundPlayer sp1 = new SoundPlayer(Properties.Resources.reload1);
         SoundPlayer sp2 = new SoundPlayer(Properties.Resources.reload2);
 
-        public string Name;
-        public int Level = 1;
-        private int Coins = 50;
-        private int CoinsFromBeginning = 7500;
+        public static string NameGame;
+        public static int Level = 1;
+        public static int Coins = 50;
         private int CoinsPerRound = 0;
-        private List<Gun> UnlockedGuns = new List<Gun>();
-        
+        public static List<Gun> UnlockedGuns = new List<Gun>();
+
         //tohle zmenit kdyz chci novou hru a mam vlastne novou hru
 
         //Co vsechno potrebuju ulozit pri loadovani hry?
@@ -124,7 +123,7 @@ namespace duckHuntROP
             Width = this.Size.Width;
             Height = this.Size.Height;
 
-            
+
             CurrentGame = new Game(true);
             MenuPanel = new Panel();
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
@@ -207,7 +206,7 @@ namespace duckHuntROP
             ScorePB.BackgroundImage = Properties.Resources.score;
             ScorePB.BackgroundImageLayout = ImageLayout.Stretch;
             ScorePB.BackColor = Color.Transparent;
-            ScorePB.Click +=new EventHandler(Score_Click);
+            ScorePB.Click += new EventHandler(Score_Click);
 
             kReloadPB = new PictureBox();
             kReloadPB.Size = new Size(Width / 16, Width / 16);
@@ -249,31 +248,31 @@ namespace duckHuntROP
             SoundPB.BackgroundImage = Properties.Resources.soundOnButton;
             SoundPB.Click += new EventHandler(Sound_Click);
 
-            //SavePB = new PictureBox();
-            //SavePB.Size = new Size(Width / 12, Height / 12);
-            //SavePB.Location = new Point(Width / 8, Height / 8);
-            //SavePB.BackgroundImage = Properties.Resources.saveButton;
-            //SavePB.BackgroundImageLayout = ImageLayout.Stretch;
-            //SavePB.Click += new EventHandler(Save_Click);
+            SavePB = new PictureBox();
+            SavePB.Size = new Size(Width / 12, Height / 12);
+            SavePB.Location = new Point(Width / 8, Height / 8);
+            SavePB.BackgroundImage = Properties.Resources.saveButton;
+            SavePB.BackgroundImageLayout = ImageLayout.Stretch;
+            SavePB.Click += new EventHandler(Save_Click);
 
-            //LoadPB = new PictureBox();
-            //LoadPB.Size = new Size(Width / 12, Height / 12);
-            //LoadPB.Location = new Point(Width / 8, Height / 8 + Height / 10);
-            //LoadPB.BackgroundImage = Properties.Resources.loadButton;
-            //LoadPB.BackgroundImageLayout = ImageLayout.Stretch;
-            //LoadPB.Click += new EventHandler(Load_Click);
+            LoadPB = new PictureBox();
+            LoadPB.Size = new Size(Width / 12, Height / 12);
+            LoadPB.Location = new Point(Width / 8, Height / 8 + Height / 10);
+            LoadPB.BackgroundImage = Properties.Resources.loadButton;
+            LoadPB.BackgroundImageLayout = ImageLayout.Stretch;
+            LoadPB.Click += new EventHandler(Load_Click);
 
             ApplyPB = new PictureBox();
             ApplyPB.Size = new Size(Width / 24, Height / 24);
-            ApplyPB.Location = new Point(Width / 8+Width/8, Height / 8 + Height / 2);
+            ApplyPB.Location = new Point(Width / 8 + Width / 8, Height / 8 + Height / 2);
             ApplyPB.BackgroundImage = Properties.Resources.sizeButton;
             ApplyPB.Click += new EventHandler(Size_Click);
 
-            //LoadNameTB = new TextBox();
-            //LoadNameTB.Size = new Size(Width / 12, Height / 24);
-            //LoadNameTB.Location = new Point(Width / 8, Height / 8 + Height / 5);
-            //LoadNameTB.Text = "Jmeno";
-            //LoadNameTB.TabStop = false;
+            LoadNameTB = new TextBox();
+            LoadNameTB.Size = new Size(Width / 12, Height / 24);
+            LoadNameTB.Location = new Point(Width / 8, Height / 8 + Height / 5);
+            LoadNameTB.Text = "Jmeno";
+            LoadNameTB.TabStop = false;
 
             SizePickerCB = new ComboBox();
             SizePickerCB.Items.Add("640x360");
@@ -293,7 +292,7 @@ namespace duckHuntROP
             StartPanel.Controls.Add(OptionsPanel);
             StartPanel.Controls.Add(ContinuePB);
             StartPanel.Controls.Add(ScorePB);
-            
+
             OptionsPanel.Controls.Add(kReloadPB);
             OptionsPanel.Controls.Add(kEndPB);
             OptionsPanel.Controls.Add(kBackPB);
@@ -301,9 +300,9 @@ namespace duckHuntROP
             OptionsPanel.Controls.Add(SizePickerCB);
             OptionsPanel.Controls.Add(ApplyPB);
 
-            //ScorePanel.Controls.Add(SavePB);
-            //ScorePanel.Controls.Add(LoadPB);
-            //ScorePanel.Controls.Add(LoadNameTB);
+            ScorePanel.Controls.Add(SavePB);
+            ScorePanel.Controls.Add(LoadPB);
+            ScorePanel.Controls.Add(LoadNameTB);
 
             ScorePanel.Controls.Add(st);
 
@@ -314,10 +313,10 @@ namespace duckHuntROP
 
             FlyZone.Click += new EventHandler(FlyZone_Click);
             FlyZone.Hide();
-            
+
             ShopPanel = new Panel();
-            ShopPanel.Size = new Size(Width-Width/6, Height - Height / 4);
-            ShopPanel.Location = new Point(Width/6, Height / 11);
+            ShopPanel.Size = new Size(Width - Width / 6, Height - Height / 4);
+            ShopPanel.Location = new Point(Width / 6, Height / 11);
             ShopPanel.BackColor = Color.Transparent;
             ShopPanel.Hide();
 
@@ -325,7 +324,7 @@ namespace duckHuntROP
             EndZone.Size = new Size(Width / 32, FlyZone.Height);
             EndZone.Location = new Point(FlyZone.Width - FlyZone.Width / 32, 0);
             EndZone.BackColor = Color.Red;
-            
+
             FlyZone.Controls.Add(EndZone);
 
             FlyTimer = new Timer();
@@ -334,7 +333,7 @@ namespace duckHuntROP
 
             BulletZone = new Panel();
             BulletZone.Size = new Size(Width / 4, Height / 16);
-            BulletZone.Location = new Point(0, Height - Height /13);
+            BulletZone.Location = new Point(0, Height - Height / 13);
             BulletZone.BackColor = Color.Transparent;
             BulletZone.Hide();
 
@@ -349,7 +348,7 @@ namespace duckHuntROP
             HurtLevels.Add(Properties.Resources.Hurt2);
             HurtLevels.Add(Properties.Resources.Hurt3);
 
-            LockedGuns.Add(Properties.Resources.gun1Selected); 
+            LockedGuns.Add(Properties.Resources.gun1Selected);
             LockedGuns.Add(Properties.Resources.gun4Locked);
             LockedGuns.Add(Properties.Resources.gun6Locked);
 
@@ -368,7 +367,7 @@ namespace duckHuntROP
             {
                 PictureBox gunPB = new PictureBox();
                 gunPB.Size = new Size(Width / 4, Height / 20);
-                gunPB.Location = new Point(Width / 8, Height / 16 * i + Height / 16);                
+                gunPB.Location = new Point(Width / 8, Height / 16 * i + Height / 16);
                 gunPB.BackgroundImage = LockedGuns[i];
                 gunPB.BackgroundImageLayout = ImageLayout.Stretch;
                 gunPB.BackColor = Color.Transparent;
@@ -401,32 +400,55 @@ namespace duckHuntROP
         {
             await Task.Delay(4000);
             this.Focus();
-            MessageBox.Show("FocusGained");
         }
         private void Save_Click(object sender, EventArgs e)
         {
-            if (LoadNameTB.Text == string.Empty)
+            if (st.Controls[0] is ListView)
             {
-                MessageBox.Show("Prazdne pole jmena!");
-            } else { 
-                CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
-                CurrentGame.SaveGame("save.txt", LoadNameTB.Text);
-                this.Focus();
+                if ((st.Controls[0] as ListView).SelectedItems.Count != 0) 
+                {
+                    if ((st.Controls[0] as ListView).SelectedItems[0].Text == string.Empty || (st.Controls[0] as ListView).SelectedItems[0].Text == null)
+                    {
+                        MessageBox.Show("Prazdne pole jmena!");
+                    }
+                    else
+                    {
+                        CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
+                        CurrentGame.SaveGame("save.dat", (st.Controls[0] as ListView).SelectedItems[0].Text);
+                        this.Focus();
+                    }
+                } else
+                {
+                    if(LoadNameTB.Text == string.Empty)
+                    {
+                        MessageBox.Show("Prazdne pole jmena!");
+                    } else
+                    {
+                        CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
+                        CurrentGame.SaveGame("save.dat", LoadNameTB.Text);
+                        this.Focus();
+                        st.UpdateListView();
+                    }
+                }
             }
         }
         private void Load_Click(object sender, EventArgs e)
         {
-            
-            if (LoadNameTB.Text == string.Empty)
+
+            if (st.Controls[0] is ListView)
             {
-                MessageBox.Show("Prazdne pole jmena!");
-            }
-            else
-            {
-                CurrentGame.LoadGame("save.txt", LoadNameTB.Text);
-                CurrentGame.Load(out Name, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
-                ContinuePB.Show();
-                this.Focus();
+                if ((st.Controls[0] as ListView).SelectedItems[0].Text == string.Empty && (st.Controls[0] as ListView).SelectedItems[0].Text != null)
+                {
+
+                    MessageBox.Show("Prazdne pole jmena!");
+                }
+                else
+                {
+                    CurrentGame.LoadGame("save.dat", (st.Controls[0] as ListView).SelectedItems[0].Text);
+                    CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
+                    ContinuePB.Show();
+                    this.Focus();
+                }
             }
         }
         private void Score_Click(object sender, EventArgs e)
@@ -439,7 +461,7 @@ namespace duckHuntROP
         {
 
             CurrentGame = new Game(true);
-            CurrentGame.Load(out Name, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
+            CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
             StartPanel.Hide();
             ScorePanel.Hide();
             MenuPanel.Show();
@@ -467,20 +489,21 @@ namespace duckHuntROP
             this.WindowState = FormWindowState.Normal;
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             int sizeX = 0, sizeY = 0;
-           try
+            try
             {
                 string text = SizePickerCB.Text;
-                string[] sizes =text.Split('x');
+                string[] sizes = text.Split('x');
                 sizeX = Convert.ToInt32(sizes[0]);
                 sizeY = Convert.ToInt32(sizes[1]);
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
             }
-                ResizeAllControls(this, (float)sizeX/(float)Width, (float)sizeY / (float)Height);
+            ResizeAllControls(this, (float)sizeX / (float)Width, (float)sizeY / (float)Height);
             this.Width = sizeX;
             this.Height = sizeY;
-            
+
         }
         private void ResizeAllControls(Control control, float scaleX, float scaleY)
         {
@@ -504,27 +527,28 @@ namespace duckHuntROP
         private void Global_Click(object sender, EventArgs e)
         {
             LockAll();
-            foreach(Control c in OptionsPanel.Controls)
+            foreach (Control c in OptionsPanel.Controls)
             {
-                if(c is PictureBox)
+                if (c is PictureBox)
                 {
-                    if((c as PictureBox).Tag != null)
+                    if ((c as PictureBox).Tag != null)
                     {
                         (c as PictureBox).Tag = "0";
                     }
                 }
             }
-            
+
             kListening = true;
             (sender as PictureBox).Tag = "1";
         }
         private void Sound_Click(object sender, EventArgs e)
         {
             PlaySound = !PlaySound;
-            if(PlaySound)
+            if (PlaySound)
             {
                 (sender as PictureBox).BackgroundImage = Properties.Resources.soundOnButton;
-            } else
+            }
+            else
             {
                 (sender as PictureBox).BackgroundImage = Properties.Resources.soundOffButton;
 
@@ -684,32 +708,33 @@ namespace duckHuntROP
         {
             EndPanel = new Panel();
             EndPanel.Size = new Size(Width / 4, Height / 4);
-            EndPanel.Location = new Point(Width / 2-Width/8, Height / 2-Height/8);
+            EndPanel.Location = new Point(Width / 2 - Width / 8, Height / 2 - Height / 8);
             EndPanel.BackgroundImage = Properties.Resources.endScreen;
             EndPanel.BackgroundImageLayout = ImageLayout.Stretch;
             this.Controls.Add(EndPanel);
             Label EndLabel = new Label();
-            if(win)
+            if (win)
             {
                 EndLabel.Text = "Dals to! :-)\n";
-            } else
+            }
+            else
             {
                 EndLabel.Text = "Mozna priste! :-(\n";
             }
             EndLabel.Text += "Vydelal sis: " + CoinsPerRound + " korunek nyni mas " + Coins + " korunek";
-            
-            EndLabel.MaximumSize = new Size(EndPanel.Width-EndPanel.Width / 16, EndPanel.Height-EndPanel.Height / 4);
-            EndLabel.Location = new Point(EndPanel.Width / 32, EndPanel.Height/8);
+
+            EndLabel.MaximumSize = new Size(EndPanel.Width - EndPanel.Width / 16, EndPanel.Height - EndPanel.Height / 4);
+            EndLabel.Location = new Point(EndPanel.Width / 32, EndPanel.Height / 8);
             EndLabel.BackColor = Color.Transparent;
             EndLabel.Font = new Font(EndLabel.Font.FontFamily, EndPanel.Height / 20);
             EndLabel.AutoSize = true;
-            
+
             PictureBox EndButton = new PictureBox();
-            EndButton.Size = new Size(EndPanel.Width / 8, EndPanel.Height/8);
+            EndButton.Size = new Size(EndPanel.Width / 8, EndPanel.Height / 8);
             EndButton.BackgroundImage = Properties.Resources.okButton;
             EndButton.BackgroundImageLayout = ImageLayout.Stretch;
             EndButton.BackColor = Color.Transparent;
-            EndButton.Location = new Point(EndPanel.Width / 2-EndPanel.Width/16, EndPanel.Height / 2 + EndPanel.Height / 4);
+            EndButton.Location = new Point(EndPanel.Width / 2 - EndPanel.Width / 16, EndPanel.Height / 2 + EndPanel.Height / 4);
             EndButton.Click += new EventHandler(EndButton_Click);
             EndPanel.Controls.Add(EndLabel);
             EndPanel.Controls.Add(EndButton);
@@ -734,7 +759,7 @@ namespace duckHuntROP
         {
             Random rnd = new Random();
             this.Cursor = Cursor.Current;
-            Cursor.Position = new Point(Cursor.Position.X + rnd.Next(-Width/20,Width/20), Cursor.Position.Y-rnd.Next(0,Height/20) );
+            Cursor.Position = new Point(Cursor.Position.X + rnd.Next(-Width / 20, Width / 20), Cursor.Position.Y - rnd.Next(0, Height / 20));
             //pozdeji zmenit na currentgun.recoil nebo pridat parametr s recoilem :-)
         }
         public void SpawnDucks()
@@ -750,7 +775,7 @@ namespace duckHuntROP
                 DuckPB.BackgroundImageLayout = ImageLayout.Stretch;
                 DuckPB.Name = Dck.Speed.ToString();
                 DuckPB.BackColor = Color.Transparent;
-                DuckPB.Tag = Dck.Health + "|" + Dck.Coins+"|"+Dck.HurtLevel;
+                DuckPB.Tag = Dck.Health + "|" + Dck.Coins + "|" + Dck.HurtLevel;
                 FlyZone.Controls.Add(DuckPB);
             }
         }
@@ -760,19 +785,20 @@ namespace duckHuntROP
             if (CurrentGun != null && CurrentGun.CanShoot())
             {
                 PictureBox pb = (sender as PictureBox);
-                if(PlaySound) { 
-                sp.Play();
+                if (PlaySound)
+                {
+                    sp.Play();
                 }
                 CurrentGun.Shoot();
                 Recoil();
                 ChangeBullets(false);
-                if(pb.Tag!= null)
+                if (pb.Tag != null)
                 {
                     string[] pbParams = pb.Tag.ToString().Split('|');
                     int CurrentHealth = Convert.ToInt32(pbParams[0]);
                     int CurrentCoins = Convert.ToInt32(pbParams[1]);
                     int CurrentHurtLevel = Convert.ToInt32(pbParams[2]);
-                    if(CurrentHealth - CurrentGun.Damage <=0)
+                    if (CurrentHealth - CurrentGun.Damage <= 0)
                     {
                         Coins += CurrentCoins;
                         CoinsPerRound += CurrentCoins;
@@ -784,16 +810,17 @@ namespace duckHuntROP
                             await Task.Delay(100);
                             BeginInvoke(new Action(() => pb.Dispose()));
                         });
-                    } else
+                    }
+                    else
                     {
                         pb.SizeMode = PictureBoxSizeMode.StretchImage;
-                        if(CurrentHurtLevel!=HurtLevels.Count)
+                        if (CurrentHurtLevel != HurtLevels.Count)
                         {
                             CurrentHurtLevel++;
                         }
-                        pb.Image = HurtLevels[CurrentHurtLevel-1];
-                        pb.Tag = (CurrentHealth - CurrentGun.Damage).ToString() +"|"+CurrentCoins.ToString()+"|"+CurrentHurtLevel.ToString();
-                       
+                        pb.Image = HurtLevels[CurrentHurtLevel - 1];
+                        pb.Tag = (CurrentHealth - CurrentGun.Damage).ToString() + "|" + CurrentCoins.ToString() + "|" + CurrentHurtLevel.ToString();
+
                     }
                 }
             }
@@ -801,17 +828,17 @@ namespace duckHuntROP
         private void CreateBullets()
         {
             double multiplier = 1;
-            if(CurrentGun.MaxAmmo >8)
+            if (CurrentGun.MaxAmmo > 8)
             {
                 multiplier = 0.5;
             }
-            for(int i = 0;i != CurrentGun.MaxAmmo;i++) 
+            for (int i = 0; i != CurrentGun.MaxAmmo; i++)
             {
                 //pri hodne bullets vyjedou z bulletzone, moznost udelat to tak aby se bulletzone.width/pocbullets a mel bys jak velka ma bejt kazda kulka +-bulletzone.Width/20 nebo neco
                 //done
                 Panel Bullet = new Panel();
-                Bullet.Size = new Size(Convert.ToInt32(BulletZone.Width/15*multiplier), BulletZone.Height);
-                Bullet.Location = new Point(Convert.ToInt32((BulletZone.Width/10*i+BulletZone.Width/20)*multiplier),0);
+                Bullet.Size = new Size(Convert.ToInt32(BulletZone.Width / 15 * multiplier), BulletZone.Height);
+                Bullet.Location = new Point(Convert.ToInt32((BulletZone.Width / 10 * i + BulletZone.Width / 20) * multiplier), 0);
                 Bullet.BackColor = Color.DarkGoldenrod;
                 BulletZone.Controls.Add(Bullet);
             }
@@ -829,15 +856,15 @@ namespace duckHuntROP
                 ChangeBullets(false);
             }
         }
-        private void Form_KeyDown(object sender,KeyEventArgs e)
+        private void Form_KeyDown(object sender, KeyEventArgs e)
         {
 
             if (kListening && Game.FromKeys(e.KeyData) != string.Empty)
             {
                 kListening = false;
-                foreach(object ob in OptionsPanel.Controls)
+                foreach (object ob in OptionsPanel.Controls)
                 {
-                    if(ob is PictureBox)
+                    if (ob is PictureBox)
                     {
                         PictureBox pb = (PictureBox)ob;
                         if (pb.Tag != null)
@@ -858,29 +885,29 @@ namespace duckHuntROP
                                     case "Back":
                                         kBack = e.KeyData;
                                         break;
-                                    
+
                                 }
                             }
                         }
                     }
                 }
-                
-            } 
-            else 
+
+            }
+            else
             {
                 if (e.KeyData == kReload && FlyZone.Visible)
                 {
-                    CurrentGun.Reload(); 
+                    CurrentGun.Reload();
                     if (CurrentGun.CurrentAmmo != CurrentGun.MaxAmmo)
                     {
                         ChangeBullets(true);
                     } //if je pojisteni pred moznym bugem kdy uzivatel klikne R pred tim nez dobehne v CurrentGun.Shoot delayROF
                 }
-                if(e.KeyData == kEnd)
+                if (e.KeyData == kEnd)
                 {
                     Application.Exit();
                 }
-                if(e.KeyData == kBack && FlyZone.Visible)
+                if (e.KeyData == kBack && FlyZone.Visible)
                 {
                     End(false);
                 }
@@ -888,15 +915,16 @@ namespace duckHuntROP
         }
         private void Shop_Click(object sender, EventArgs e)
         {
-            if(FlyZone.Visible == false)
+            if (FlyZone.Visible == false)
             {
                 ShopPanel.Visible = !ShopPanel.Visible;
-            } else
+            }
+            else
             {
                 //throw errorlog in logs
             }
         }
-        private void Gun_Buy(object sender,EventArgs e)
+        private void Gun_Buy(object sender, EventArgs e)
         {
             //Gun list -> gun1, gun4, gun6;
             Gun gun = AllGuns[Convert.ToInt32((sender as PictureBox).Tag)];
@@ -907,33 +935,35 @@ namespace duckHuntROP
                     Coins -= gun.Cost;
                     UnlockedGuns.Add(gun);
                     (sender as PictureBox).BackgroundImage = gun.Img;
-                }else
+                }
+                else
                 {
                     MessageBox.Show("drahe " + gun.Cost + " to stoji a ty mas jen " + Coins);
                 }
-            } else
+            }
+            else
             {
                 (ShopPanel.Controls[CurrentGun.ID] as PictureBox).BackgroundImage = CurrentGun.Img;
                 CurrentGun = gun;
                 gun.CurrentAmmo = gun.MaxAmmo;
                 (sender as PictureBox).BackgroundImage = SelectedGuns[Convert.ToInt32((sender as PictureBox).Tag)];
             }
-            
+
         }
         private void DiscardBullets()
         {
-            while(BulletZone.Controls.Count > 0)
+            while (BulletZone.Controls.Count > 0)
             {
-                BulletZone.Controls.RemoveAt(0); 
+                BulletZone.Controls.RemoveAt(0);
             }
         }
         private async Task ChangeBullets(bool Plus)
         {
-            if(Plus)
+            if (Plus)
             {
-                foreach(Control s in BulletZone.Controls)
+                foreach (Control s in BulletZone.Controls)
                 {
-                    if(s is Panel)
+                    if (s is Panel)
                     {
                         await Task.Run(() => Task.Delay(CurrentGun.DelayReload / CurrentGun.MaxAmmo));
                         (s as Panel).BackColor = Color.DarkGoldenrod;
@@ -952,11 +982,11 @@ namespace duckHuntROP
             }
             else
             {
-                for(int i = BulletZone.Controls.Count - 1; i >= 0; i--)
+                for (int i = BulletZone.Controls.Count - 1; i >= 0; i--)
                 {
-                    if(BulletZone.Controls[i] is Panel)
+                    if (BulletZone.Controls[i] is Panel)
                     {
-                        if((BulletZone.Controls[i] as Panel).BackColor == Color.DarkGoldenrod)
+                        if ((BulletZone.Controls[i] as Panel).BackColor == Color.DarkGoldenrod)
                         {
                             (BulletZone.Controls[i] as Panel).BackColor = Color.LightGoldenrodYellow;
                             break;
