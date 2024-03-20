@@ -350,11 +350,13 @@ namespace duckHuntROP
 
             LockedGuns.Add(Properties.Resources.gun1Selected);
             LockedGuns.Add(Properties.Resources.gun4Locked);
+            LockedGuns.Add(Properties.Resources.gun8Locked);
             LockedGuns.Add(Properties.Resources.gun6Locked);
             LockedGuns.Add(Properties.Resources.gun7Locked);
 
             SelectedGuns.Add(Properties.Resources.gun1Selected);
             SelectedGuns.Add(Properties.Resources.gun4Selected);
+            SelectedGuns.Add(Properties.Resources.gun8Selected);
             SelectedGuns.Add(Properties.Resources.gun6Selected);
             SelectedGuns.Add(Properties.Resources.gun7Selected);
 

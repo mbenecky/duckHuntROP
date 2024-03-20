@@ -58,10 +58,11 @@ namespace duckHuntROP
         public static List<Gun> CreateGuns()
         {
             List<Gun> list = new List<Gun>();
-            list.Add(new Gun(5, 4, 4, 100, 4000,0, Properties.Resources.gun1, 0));
+            list.Add(new Gun(5, 4, 4, 100, 3000,0, Properties.Resources.gun1, 0));
             list.Add(new Gun(6, 6, 6, 100, 4000,100 ,Properties.Resources.gun4,1));
-            list.Add(new Gun(2, 12, 12, 30, 4000, 7000, Properties.Resources.gun6,2));
-            list.Add(new Gun(1, 60, 60, 20, 4000, 10000, Properties.Resources.gun7, 3));
+            list.Add(new Gun(5, 10, 10, 100, 4000, 1000, Properties.Resources.gun8, 2));
+            list.Add(new Gun(2, 16, 16, 30, 3000, 7000, Properties.Resources.gun6,3));
+            list.Add(new Gun(1, 60, 60, 20, 7000, 10000, Properties.Resources.gun7, 4));
             return list;
 
         }

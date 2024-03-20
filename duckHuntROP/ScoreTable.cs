@@ -54,7 +54,7 @@ namespace duckHuntROP
             {
                 using (StreamReader sr = new StreamReader("save.txt"))
                 {
-                    
+                   ScoreListView.Items.Clear();
                     string[] splitPath = File.ReadAllLines("save.txt");
                     foreach (string a in splitPath)
                     {
