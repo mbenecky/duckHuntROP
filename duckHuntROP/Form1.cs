@@ -351,10 +351,12 @@ namespace duckHuntROP
             LockedGuns.Add(Properties.Resources.gun1Selected);
             LockedGuns.Add(Properties.Resources.gun4Locked);
             LockedGuns.Add(Properties.Resources.gun6Locked);
+            LockedGuns.Add(Properties.Resources.gun7Locked);
 
             SelectedGuns.Add(Properties.Resources.gun1Selected);
             SelectedGuns.Add(Properties.Resources.gun4Selected);
             SelectedGuns.Add(Properties.Resources.gun6Selected);
+            SelectedGuns.Add(Properties.Resources.gun7Selected);
 
             kReload = Keys.R;
             kEnd = Keys.Escape;
@@ -668,6 +670,23 @@ namespace duckHuntROP
             }
         }
 
+        public void ChangeShop()
+        {
+            //UnlockedGuns
+            //kazda unlockedGuns ma ID
+            //id = pozice v ShopPanel.Controls[]
+            try {
+                foreach(Gun a in UnlockedGuns)
+                {
+                    (ShopPanel.Controls[a.ID] as PictureBox).BackgroundImage = a.Img;
+                }
+                (ShopPanel.Controls[CurrentGun.ID] as PictureBox).BackgroundImage = SelectedGuns[CurrentGun.ID];
+            } 
+            catch(Exception ex)
+            {
+                MessageBox.Show("ChangeShop doesnt work :-(" + ex.Message);
+            }
+        }
         private void Hunt_Click(object sender, EventArgs e)
         {
             FlyZone.Show();
@@ -832,10 +851,16 @@ namespace duckHuntROP
         }
         private void CreateBullets()
         {
+            
             double multiplier = 1;
+            
             if (CurrentGun.MaxAmmo > 8)
             {
                 multiplier = 0.5;
+            }
+            if (CurrentGun.MaxAmmo > 20)
+            {
+                multiplier = 0.15;
             }
             for (int i = 0; i != CurrentGun.MaxAmmo; i++)
             {
@@ -920,14 +945,8 @@ namespace duckHuntROP
         }
         private void Shop_Click(object sender, EventArgs e)
         {
-            if (FlyZone.Visible == false)
-            {
-                ShopPanel.Visible = !ShopPanel.Visible;
-            }
-            else
-            {
-                //throw errorlog in logs
-            }
+            ShopPanel.Visible = !ShopPanel.Visible;
+            ChangeShop();
         }
         private void Gun_Buy(object sender, EventArgs e)
         {
@@ -979,7 +998,6 @@ namespace duckHuntROP
                     }
 
                 }
-
                 if (PlaySound)
                 {
                     sp2.Play();

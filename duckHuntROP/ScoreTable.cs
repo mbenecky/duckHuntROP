@@ -41,22 +41,12 @@ namespace duckHuntROP
             ScoreListView.Columns.Add("Name");
             ScoreListView.Columns.Add("Coins");
             ScoreListView.Columns.Add("Levels");
-            ScoreListView.ColumnClick += new ColumnClickEventHandler(Column_Click);
             ResizeColumns(ScoreListView);
 
             this.Controls.Add(ScoreListView);
 
         }
-        private void Column_Click(object sender, ColumnClickEventArgs e)
-        {
-            MessageBox.Show(e.Column.ToString());
-            // row Jmeno  50 5
-            // row Ajmeno 50 5
-            // row Bjmeno 50 5
-            // row Cjmeno 54 4
-            //list<string[]> ?
-            
-        }
+        
         public void UpdateListView()
         {
             Game.Show("save.dat");

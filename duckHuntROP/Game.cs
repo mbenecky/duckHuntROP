@@ -25,7 +25,7 @@ namespace duckHuntROP
             if (baseVal)
             {
                 Name = "default";
-                Coins = 50;
+                Coins = 10000;
                 Level = 1;
                 CurrentGun = Gun.CreateGuns()[0];
                 UnlockedGuns = new List<Gun>();
