@@ -65,6 +65,9 @@ namespace duckHuntROP
         private PictureBox EndPBMenu;
 
         //pictureboxes fungujici jako buttony
+        
+        private PictureBox CoinPB;
+        private Label CoinLabel;
 
         private TextBox LoadNameTB;
         private ComboBox SizePickerCB;
@@ -129,7 +132,7 @@ namespace duckHuntROP
             MenuPanel = new Panel();
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
             MenuPanel.Location = new Point(0, Height / 11);
-            MenuPanel.BackColor = Color.Red;
+            MenuPanel.BackColor = Color.Transparent;
             MenuPanel.Hide();
 
             st = new ScoreTable(this.Size);
@@ -385,6 +388,22 @@ namespace duckHuntROP
             kEnd = Keys.Escape;
             kBack = Keys.Left;
 
+            CoinPB = new PictureBox();
+            CoinPB.Size = new Size(Width / 10, Height / 10);
+            CoinPB.Location = new Point(Width / 2, Height / 20);
+            CoinPB.BackgroundImage = Properties.Resources.coinImage;
+            CoinPB.BackgroundImageLayout = ImageLayout.Stretch;
+            CoinPB.Tag = "false";
+
+            CoinLabel = new Label();
+            CoinLabel.Size = new Size(Width / 10, Height / 10);
+            CoinLabel.Location = new Point(Width / 2 + Width / 10, Height / 20);
+            CoinLabel.BackColor = Color.Transparent;
+            CoinLabel.ForeColor = Color.White;
+            CoinLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CoinLabel.Font = new Font("Arial", Width/64 , FontStyle.Bold);
+            CoinLabel.Text = "0";
+
             AllGuns = Gun.CreateGuns();
             UnlockedGuns.Add(AllGuns[0]);
             CurrentGun = AllGuns[0];
@@ -401,6 +420,8 @@ namespace duckHuntROP
                 ShopPanel.Controls.Add(gunPB);
                 gunPB.Show();
             }
+            ShopPanel.Controls.Add(CoinPB);
+            ShopPanel.Controls.Add(CoinLabel);
         }
         private void FlyTimer_Tick(object sender, EventArgs e)
         {
@@ -459,7 +480,7 @@ namespace duckHuntROP
                 Application.Exit();
             }
         }
-        private void Load_Click(object sender, EventArgs e)
+        private void Load_Click(object sender, EventArgs e) 
         {
 
             if (st.Controls[0] is ListView)
@@ -499,8 +520,10 @@ namespace duckHuntROP
             {
                 if (ob is PictureBox)
                 {
-                    (ob as PictureBox).BackgroundImage = LockedGuns[i];
-                    i++;
+                    if((ob as PictureBox).Tag.ToString() != "false") { 
+                        (ob as PictureBox).BackgroundImage = LockedGuns[i];
+                        i++;
+                    }
                 }
             }
             (ShopPanel.Controls[0] as PictureBox).BackgroundImage = SelectedGuns[0];
@@ -700,6 +723,7 @@ namespace duckHuntROP
             //kazda unlockedGuns ma ID
             //id = pozice v ShopPanel.Controls[]
             try {
+                CoinLabel.Text = Coins.ToString();
                 foreach(Gun a in UnlockedGuns)
                 {
                     (ShopPanel.Controls[a.ID] as PictureBox).BackgroundImage = a.Img;
@@ -987,6 +1011,7 @@ namespace duckHuntROP
                     Coins -= gun.Cost;
                     UnlockedGuns.Add(gun);
                     (sender as PictureBox).BackgroundImage = gun.Img;
+                    CoinLabel.Text = Coins.ToString();
                 }
                 else
                 {

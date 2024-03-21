@@ -143,6 +143,16 @@ namespace duckHuntROP.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap coinImage {
+            get {
+                object obj = ResourceManager.GetObject("coinImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dKey {
             get {
                 object obj = ResourceManager.GetObject("dKey", resourceCulture);
