@@ -502,6 +502,16 @@ namespace duckHuntROP.Properties {
         /// <summary>
         ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap leaveButton {
+            get {
+                object obj = ResourceManager.GetObject("leaveButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap leftKey {
             get {
                 object obj = ResourceManager.GetObject("leftKey", resourceCulture);

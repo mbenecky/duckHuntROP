@@ -141,7 +141,6 @@ namespace duckHuntROP
                     foreach (string a in unlockedGunsID)
                     {
                         //[0][1][2]
-                        MessageBox.Show(a);
                         gunList.Add(AllGuns[Convert.ToInt32(a)]);
                     }
                     UnlockedGuns = gunList;

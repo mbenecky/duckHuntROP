@@ -323,5 +323,8 @@
   <ItemGroup>
     <None Include="Resources\gun8Locked.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leaveButton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

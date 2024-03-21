@@ -61,6 +61,8 @@ namespace duckHuntROP
         private PictureBox SavePB;
         private PictureBox ApplyPB;
         private PictureBox ScorePB;
+        private PictureBox EndPBStart;
+        private PictureBox EndPBMenu;
 
         //pictureboxes fungujici jako buttony
 
@@ -127,7 +129,7 @@ namespace duckHuntROP
             MenuPanel = new Panel();
             MenuPanel.Size = new Size(Width / 6, Height - Height / 4);
             MenuPanel.Location = new Point(0, Height / 11);
-            MenuPanel.BackColor = Color.Transparent;
+            MenuPanel.BackColor = Color.Red;
             MenuPanel.Hide();
 
             st = new ScoreTable(this.Size);
@@ -198,6 +200,22 @@ namespace duckHuntROP
             OptionsPB.BackgroundImageLayout = ImageLayout.Stretch;
             OptionsPB.BackColor = Color.Transparent;
             OptionsPB.Click += new EventHandler(Options_Click);
+
+            EndPBStart = new PictureBox();
+            EndPBStart.Size = NewGamePB.Size;
+            EndPBStart.Location = new Point(ShopPB.Location.X, Height / 2);
+            EndPBStart.BackgroundImage = Properties.Resources.leaveButton;
+            EndPBStart.BackgroundImageLayout = ImageLayout.Stretch;
+            EndPBStart.BackColor = Color.Transparent;
+            EndPBStart.Click += new EventHandler(End_Click);
+
+            EndPBMenu = new PictureBox();
+            EndPBMenu.Size = EndPBStart.Size;
+            EndPBMenu.Location = EndPBStart.Location;
+            EndPBMenu.BackgroundImage = Properties.Resources.leaveButton;
+            EndPBMenu.BackgroundImageLayout = ImageLayout.Stretch;
+            EndPBMenu.BackColor = Color.Transparent;
+            EndPBMenu.Click += new EventHandler(End_Click);
 
             ScorePB = new PictureBox();
             ScorePB.Size = NewGamePB.Size;
@@ -287,12 +305,14 @@ namespace duckHuntROP
             MenuPanel.Controls.Add(BackPB);
             MenuPanel.Controls.Add(PlayPB);
             MenuPanel.Controls.Add(ShopPB);
+            MenuPanel.Controls.Add(EndPBMenu);
 
             StartPanel.Controls.Add(NewGamePB);
             StartPanel.Controls.Add(OptionsPB);
             StartPanel.Controls.Add(OptionsPanel);
             StartPanel.Controls.Add(ContinuePB);
             StartPanel.Controls.Add(ScorePB);
+            StartPanel.Controls.Add(EndPBStart);
 
             OptionsPanel.Controls.Add(kReloadPB);
             OptionsPanel.Controls.Add(kEndPB);
@@ -409,7 +429,7 @@ namespace duckHuntROP
                 {
                     if ((st.Controls[0] as ListView).SelectedItems[0].Text == string.Empty || (st.Controls[0] as ListView).SelectedItems[0].Text == null)
                     {
-                        MessageBox.Show("Prazdne pole jmena!");
+                        MessageBox.Show("Empty name field!");
                     }
                     else
                     {
@@ -420,14 +440,23 @@ namespace duckHuntROP
                 {
                     if(LoadNameTB.Text == string.Empty)
                     {
-                        MessageBox.Show("Prazdne pole jmena!");
+                        MessageBox.Show("Empty name field!");
                     } else
                     {
                         CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
                         CurrentGame.SaveGame("save.dat", LoadNameTB.Text);
                         st.UpdateListView();
+                        LoadNameTB.Text = string.Empty;
                     }
                 }
+            }
+        }
+        private void End_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure you want to leave?\nAll your unsaved progress will be lost!", "Don't leave just yet!", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+                Application.Exit();
             }
         }
         private void Load_Click(object sender, EventArgs e)
@@ -930,7 +959,11 @@ namespace duckHuntROP
                 }
                 if (e.KeyData == kEnd)
                 {
-                    Application.Exit();
+                    DialogResult dr = MessageBox.Show("Are you sure you want to leave?\nAll your unsaved progress will be lost!", "Don't leave just yet!", MessageBoxButtons.YesNo);
+                    if (dr == DialogResult.Yes)
+                    {
+                        Application.Exit();
+                    }
                 }
                 if (e.KeyData == kBack && FlyZone.Visible)
                 {
@@ -957,7 +990,7 @@ namespace duckHuntROP
                 }
                 else
                 {
-                    MessageBox.Show("drahe " + gun.Cost + " to stoji a ty mas jen " + Coins);
+                    MessageBox.Show("Too expensive it costs " + gun.Cost + " and you only have " + Coins);
                 }
             }
             else
