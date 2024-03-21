@@ -25,7 +25,7 @@ namespace duckHuntROP
             if (baseVal)
             {
                 Name = "default";
-                Coins = 50;
+                Coins = 16000;
                 Level = 1;
                 CurrentGun = Gun.CreateGuns()[0];
                 UnlockedGuns = new List<Gun>();
@@ -114,7 +114,7 @@ namespace duckHuntROP
                 {
                     if (!sr.ReadToEnd().Contains(nameID))
                     {
-                        MessageBox.Show("Jmeno nenalezeno");
+                        MessageBox.Show("Name not found!");
                         found = false;
                     }
                     string[] splitPath = File.ReadAllLines(path);
@@ -132,7 +132,6 @@ namespace duckHuntROP
                     //Každá hodnota uložena v tomhle formátu, jestli jinak, tak se neznám
                     //name;coins;level;currentGun(číslo v allguns);unlockedguns1|unlockedguns2;r;esc;left
                     string[] values = gamePath.Split(';');
-                    MessageBox.Show(gamePath);
                     this.Name = values[0];
                     this.Coins = Convert.ToInt32(values[1]);
                     this.Level = Convert.ToInt32(values[2]);
@@ -149,7 +148,6 @@ namespace duckHuntROP
                     this.kReload = ToKeys(values[5]);
                     this.kEnd = ToKeys(values[6]);
                     this.kBack = ToKeys(values[7]);
-                    MessageBox.Show("Uspesne Loadnuto");
                 }
                 Hide(path);
                 return;
@@ -196,7 +194,6 @@ namespace duckHuntROP
                 }
 
                 File.WriteAllLines(path, lines);
-                MessageBox.Show("Uspesne Ulozeno");
                 Hide(path);
                 return;
 

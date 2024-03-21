@@ -24,17 +24,14 @@ namespace duckHuntROP
             this.Size = new Size(FormSize.Width / 2, FormSize.Height / 2);
         }
         public static System.Windows.Forms.ListView ScoreListView;
-        private PictureBox NameSort;
-        private PictureBox DuckSort;
-        private PictureBox LevelSort;
 
         private void ScoreTable_Load(object sender, EventArgs e)
         {
             this.Location = new Point(0, 0);
-            this.BackColor = Color.Blue;
+            this.BackColor = Color.Transparent;
             ScoreListView = new System.Windows.Forms.ListView();
-            ScoreListView.Size = new Size(this.Width / 2, this.Height / 2);
-            ScoreListView.Location = new Point(0, 0);
+            ScoreListView.Size = new Size(this.Width / 2, this.Height / 2+this.Height/6);
+            ScoreListView.Location = new Point(this.Width/32, this.Height/4);
             ScoreListView.View = View.Details;
             ScoreListView.FullRowSelect = true;
 
@@ -49,6 +46,10 @@ namespace duckHuntROP
         
         public void UpdateListView()
         {
+            if(!File.Exists("save.dat"))
+            {
+                using(File.Create("save.dat")) { }
+            }
             Game.Show("save.dat");
             try
             {

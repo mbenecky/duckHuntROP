@@ -15,14 +15,14 @@ using System.Media;
 
 namespace duckHuntROP
 {
-    public partial class Form1 : Form
+    public partial class DuckHunt : Form
     {
-        public Form1()
+        public DuckHunt()
         {
             InitializeComponent();
             this.Size = Screen.PrimaryScreen.Bounds.Size;
         }
-        public Form1(int resX, int resY)
+        public DuckHunt(int resX, int resY)
         {
             InitializeComponent();
             this.Size = new Size(resX, resY);
@@ -118,8 +118,7 @@ namespace duckHuntROP
         {
             this.BackgroundImage = Properties.Resources.bckImageNight;
             this.KeyDown += new KeyEventHandler(Form_KeyDown);
-            this.LostFocus += new EventHandler(FocusLost);
-
+            this.KeyPreview = true;
             Width = this.Size.Width;
             Height = this.Size.Height;
 
@@ -142,13 +141,13 @@ namespace duckHuntROP
             OptionsPanel = new Panel();
             OptionsPanel.Size = new Size(Width / 2 - Width / 6, Height - Height / 4);
             OptionsPanel.Location = new Point(Width / 6, 0);
-            OptionsPanel.BackColor = Color.Red;
+            OptionsPanel.BackColor = Color.Transparent;
             OptionsPanel.Hide();
 
             ScorePanel = new Panel();
             ScorePanel.Size = new Size(Width / 2 - Width / 6, Height - Height / 4);
             ScorePanel.Location = new Point(Width / 6, 0);
-            ScorePanel.BackColor = Color.Red;
+            ScorePanel.BackColor = Color.Transparent;
             ScorePanel.Hide();
 
             PlayPB = new PictureBox();
@@ -221,7 +220,7 @@ namespace duckHuntROP
 
             kEndPB = new PictureBox();
             kEndPB.Size = kReloadPB.Size;
-            kEndPB.Location = new Point(Width / 16, Height / 16 + kEndPB.Size.Height);
+            kEndPB.Location = new Point(Width / 16 + kEndPB.Size.Width, Height / 16);
             kEndPB.Name = "End";
             kEndPB.Image = Properties.Resources.escapeKey;
             kEndPB.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -232,7 +231,7 @@ namespace duckHuntROP
 
             kBackPB = new PictureBox();
             kBackPB.Size = kReloadPB.Size;
-            kBackPB.Location = new Point(Width / 16, Height / 16 + kBackPB.Size.Height * 2);
+            kBackPB.Location = new Point(Width / 16 + kBackPB.Size.Width * 2, Height / 16);
             kBackPB.Name = "Back";
             kBackPB.Image = Properties.Resources.leftKey;
             kBackPB.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -242,37 +241,38 @@ namespace duckHuntROP
             kBackPB.Click += new EventHandler(Global_Click);
 
             SoundPB = new PictureBox();
-            SoundPB.Size = new Size(Width / 8, Height / 16);
-            SoundPB.Location = new Point(Width / 8, Height / 16);
+            SoundPB.Size = new Size(Width / 8, Height / 8);
+            SoundPB.Location = new Point(Width / 16, Height / 4);
             SoundPB.BackgroundImageLayout = ImageLayout.Stretch;
             SoundPB.BackgroundImage = Properties.Resources.soundOnButton;
             SoundPB.Click += new EventHandler(Sound_Click);
 
             SavePB = new PictureBox();
             SavePB.Size = new Size(Width / 12, Height / 12);
-            SavePB.Location = new Point(Width / 8, Height / 8);
+            SavePB.Location = new Point(Width / 8, Height / 2);
             SavePB.BackgroundImage = Properties.Resources.saveButton;
             SavePB.BackgroundImageLayout = ImageLayout.Stretch;
             SavePB.Click += new EventHandler(Save_Click);
 
             LoadPB = new PictureBox();
             LoadPB.Size = new Size(Width / 12, Height / 12);
-            LoadPB.Location = new Point(Width / 8, Height / 8 + Height / 10);
+            LoadPB.Location = new Point(Width / 64 + Width / 8 +Width/10, Height / 2);
             LoadPB.BackgroundImage = Properties.Resources.loadButton;
             LoadPB.BackgroundImageLayout = ImageLayout.Stretch;
             LoadPB.Click += new EventHandler(Load_Click);
 
+            LoadNameTB = new TextBox();
+            LoadNameTB.Size = new Size(Width / 12, Height / 2);
+            LoadNameTB.Location = new Point(Width / 64, Height / 2);
+            LoadNameTB.Text = "Name";
+            LoadNameTB.TabStop = false;
+
             ApplyPB = new PictureBox();
             ApplyPB.Size = new Size(Width / 24, Height / 24);
-            ApplyPB.Location = new Point(Width / 8 + Width / 8, Height / 8 + Height / 2);
-            ApplyPB.BackgroundImage = Properties.Resources.sizeButton;
+            ApplyPB.Location = new Point(Width/64 + Width/24+Width/8, Height / 2);
+            ApplyPB.BackgroundImage = Properties.Resources.saveButton;
+            ApplyPB.BackgroundImageLayout = ImageLayout.Stretch;
             ApplyPB.Click += new EventHandler(Size_Click);
-
-            LoadNameTB = new TextBox();
-            LoadNameTB.Size = new Size(Width / 12, Height / 24);
-            LoadNameTB.Location = new Point(Width / 8, Height / 8 + Height / 5);
-            LoadNameTB.Text = "Jmeno";
-            LoadNameTB.TabStop = false;
 
             SizePickerCB = new ComboBox();
             SizePickerCB.Items.Add("640x360");
@@ -281,7 +281,8 @@ namespace duckHuntROP
             SizePickerCB.Items.Add("1600x900");
             SizePickerCB.Items.Add("1920x1080");
             SizePickerCB.Size = new Size(Width / 12, Height / 24);
-            SizePickerCB.Location = new Point(Width / 8, Height / 8 + Height / 2);
+            SizePickerCB.Location = new Point(Width / 16, Height/2);
+            SizePickerCB.DropDownStyle = ComboBoxStyle.DropDownList;
 
             MenuPanel.Controls.Add(BackPB);
             MenuPanel.Controls.Add(PlayPB);
@@ -323,7 +324,7 @@ namespace duckHuntROP
             EndZone = new Panel();
             EndZone.Size = new Size(Width / 32, FlyZone.Height);
             EndZone.Location = new Point(FlyZone.Width - FlyZone.Width / 32, 0);
-            EndZone.BackColor = Color.Red;
+            EndZone.BackColor = Color.Transparent;
 
             FlyZone.Controls.Add(EndZone);
 
@@ -400,11 +401,6 @@ namespace duckHuntROP
                 }
             }
         }
-        private async void FocusLost(object sender, EventArgs e)
-        {
-            await Task.Delay(3000);
-            this.Focus();
-        }
         private void Save_Click(object sender, EventArgs e)
         {
             if (st.Controls[0] is ListView)
@@ -419,7 +415,6 @@ namespace duckHuntROP
                     {
                         CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
                         CurrentGame.SaveGame("save.dat", (st.Controls[0] as ListView).SelectedItems[0].Text);
-                        this.Focus();
                     }
                 } else
                 {
@@ -430,7 +425,6 @@ namespace duckHuntROP
                     {
                         CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
                         CurrentGame.SaveGame("save.dat", LoadNameTB.Text);
-                        this.Focus();
                         st.UpdateListView();
                     }
                 }
@@ -444,14 +438,13 @@ namespace duckHuntROP
                 if ((st.Controls[0] as ListView).SelectedItems[0].Text == string.Empty && (st.Controls[0] as ListView).SelectedItems[0].Text != null)
                 {
 
-                    MessageBox.Show("Prazdne pole jmena!");
+                    MessageBox.Show("Empty name box!");
                 }
                 else
                 {
                     CurrentGame.LoadGame("save.dat", (st.Controls[0] as ListView).SelectedItems[0].Text);
                     CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
                     ContinuePB.Show();
-                    this.Focus();
                 }
             }
         }
