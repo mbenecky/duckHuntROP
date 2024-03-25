@@ -9,7 +9,6 @@ namespace duckHuntROP
 {
     public class Gun
     {
-
         public int ID;
         public int Damage;
         public int CurrentAmmo;

@@ -65,25 +65,11 @@ namespace duckHuntROP
         }
         public static void Hide(string path)
         {
-            try
-            {
-                File.Move(path, path.Split('.')[0] + ".dat");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hide went wrong" + ex.Message);
-            }
+            File.SetAttributes(path,  FileAttributes.Hidden);
         }
         public static void Show(string path)
         {
-            try
-            {
-                File.Move(path, path.Split('.')[0] + ".txt");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Show went wrong" + ex.Message);
-            }
+            File.SetAttributes(path,  FileAttributes.Normal);
         }
         public void NewGame()
         {
@@ -105,11 +91,11 @@ namespace duckHuntROP
             {
                 if (!File.Exists(path))
                 {
-                    using (File.Create(path)) { }
-                    //vytvoreni saves.dat
+                    using (File.Create(path)) {
+                        Hide(path);
+                    }
                 }
                 Show(path);
-                path = path.Split('.')[0] + ".txt";
                 using (StreamReader sr = new StreamReader(path))
                 {
                     if (!sr.ReadToEnd().Contains(nameID))
@@ -160,19 +146,16 @@ namespace duckHuntROP
         }
         public void SaveGame(string path, string nameID)
         {
-            path = path.Split('.')[0] + ".dat";
-            //saves.dat
+            
             try
             {
                 if (!File.Exists(path))
                 {
-                    using (File.Create(path)) { }
+                    using (File.Create(path)) {
+                        Hide(path);
+                    }
                 }
                 Show(path);
-                //path =saves.dat
-                //saves.txt
-                path = path.Split('.')[0] + ".txt";
-                //path = saves.txt
                 string[] lines = File.ReadAllLines(path);
                 bool found = false;
                 for (int i = 0; i < lines.Length; i++)
@@ -184,18 +167,15 @@ namespace duckHuntROP
                         break;
                     }
                 }
-
                 if (!found)
                 {
                     string newData = GenerateSaveData(nameID);
                     Array.Resize(ref lines, lines.Length + 1);
                     lines[lines.Length - 1] = newData;
                 }
-
                 File.WriteAllLines(path, lines);
                 Hide(path);
                 return;
-
             }
             catch (Exception ex)
             {

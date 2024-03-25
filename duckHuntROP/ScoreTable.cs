@@ -34,23 +34,22 @@ namespace duckHuntROP
             ScoreListView.Location = new Point(this.Width/32, this.Height/4);
             ScoreListView.View = View.Details;
             ScoreListView.FullRowSelect = true;
-
             ScoreListView.Columns.Add("Name");
             ScoreListView.Columns.Add("Coins");
             ScoreListView.Columns.Add("Levels");
             ResizeColumns(ScoreListView);
-
             this.Controls.Add(ScoreListView);
-
         }
         
         public void UpdateListView()
         {
-            if(!File.Exists("save.dat"))
+            if(!File.Exists("save.txt"))
             {
-                using(File.Create("save.dat")) { }
+                using(File.Create("save.txt")) {Game.Hide("save.txt");
+                    MessageBox.Show("Tady!!");
+                }
             }
-            Game.Show("save.dat");
+            Game.Show("save.txt");
             try
             {
                 using (StreamReader sr = new StreamReader("save.txt"))

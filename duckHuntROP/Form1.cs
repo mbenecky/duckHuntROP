@@ -455,7 +455,7 @@ namespace duckHuntROP
                     else
                     {
                         CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
-                        CurrentGame.SaveGame("save.dat", (st.Controls[0] as ListView).SelectedItems[0].Text);
+                        CurrentGame.SaveGame("save.txt", (st.Controls[0] as ListView).SelectedItems[0].Text);
                     }
                 } else
                 {
@@ -465,7 +465,7 @@ namespace duckHuntROP
                     } else
                     {
                         CurrentGame.Save(Name, Coins, Level, AllGuns, CurrentGun, UnlockedGuns, kReload, kEnd, kBack);
-                        CurrentGame.SaveGame("save.dat", LoadNameTB.Text);
+                        CurrentGame.SaveGame("save.txt", LoadNameTB.Text);
                         st.UpdateListView();
                         LoadNameTB.Text = string.Empty;
                     }
@@ -492,7 +492,7 @@ namespace duckHuntROP
                 }
                 else
                 {
-                    CurrentGame.LoadGame("save.dat", (st.Controls[0] as ListView).SelectedItems[0].Text);
+                    CurrentGame.LoadGame("save.txt", (st.Controls[0] as ListView).SelectedItems[0].Text);
                     CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
                     ContinuePB.Show();
                 }
