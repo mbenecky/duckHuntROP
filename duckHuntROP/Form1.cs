@@ -459,7 +459,7 @@ namespace duckHuntROP
                     }
                 } else
                 {
-                    if(LoadNameTB.Text == string.Empty)
+                    if(LoadNameTB.Text == string.Empty || LoadNameTB.Text == null)
                     {
                         MessageBox.Show("Empty name field!");
                     } else
@@ -485,16 +485,18 @@ namespace duckHuntROP
 
             if (st.Controls[0] is ListView)
             {
-                if ((st.Controls[0] as ListView).SelectedItems[0].Text == string.Empty && (st.Controls[0] as ListView).SelectedItems[0].Text != null)
+                if ((st.Controls[0] as ListView).SelectedItems.Count != 0)
                 {
-
-                    MessageBox.Show("Empty name box!");
-                }
-                else
-                {
-                    CurrentGame.LoadGame("save.txt", (st.Controls[0] as ListView).SelectedItems[0].Text);
-                    CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
-                    ContinuePB.Show();
+                    if ((st.Controls[0] as ListView).SelectedItems[0].Text == string.Empty || (st.Controls[0] as ListView).SelectedItems[0].Text == null)
+                    {
+                        MessageBox.Show("Empty name box!");
+                    }
+                    else
+                    {
+                        CurrentGame.LoadGame("save.txt", (st.Controls[0] as ListView).SelectedItems[0].Text);
+                        CurrentGame.Load(out NameGame, out Coins, out Level, out AllGuns, out CurrentGun, out UnlockedGuns, out kReload, out kEnd, out kBack);
+                        ContinuePB.Show();
+                    }
                 }
             }
         }
