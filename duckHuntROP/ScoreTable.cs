@@ -46,7 +46,6 @@ namespace duckHuntROP
             if(!File.Exists("save.txt"))
             {
                 using(File.Create("save.txt")) {Game.Hide("save.txt");
-                    MessageBox.Show("Tady!!");
                 }
             }
             Game.Show("save.txt");
